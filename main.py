@@ -14,13 +14,13 @@ from version import __version__, __description__
 from utils.helpers import normalize_url, extract_domain
 from utils.report_generator import ReportGenerator
 from utils.logger import get_logger, set_debug_mode
+from utils.ai_reporter import generate_ai_report_from_text, save_aggregated_report
 from scanner.domain_scanner import DomainScanner
 from scanner.host_scanner import HostScanner
 from scanner.tech_scanner import TechnologyScanner
 from scanner.cms_scanner import CMSScanner
 from scanner.security_scanner import SecurityScanner
 from scanner.seo_scanner import SEOScanner
-from utils.ai_reporter import generate_ai_report_from_text, save_aggregated_report
 
 # Initialize colorama for cross-platform colored terminal output
 init(autoreset=True)
@@ -252,37 +252,74 @@ class WebScanner:
             
             # Display quick summary
             self.display_quick_summary()
-            # Offer to run AI-powered bilingual analysis if configured
-            try:
-                run_ai = None
-                # If debug mode enabled, default to yes
-                if self.debug_mode:
-                    run_ai = True
-                else:
-                    ans = input('Would you like to run AI analysis for this report and save a bilingual (EN/FA) summary? [Y/n]: ').strip().lower()
-                    run_ai = (ans == '' or ans == 'y' or ans == 'yes')
-
-                if run_ai:
-                    cfg_path = 'ai_services.txt'
-                    if not os.path.exists(cfg_path):
-                        print(f"{Fore.YELLOW}AI config not found ({cfg_path}). Create {cfg_path} from ai_services.txt.example and add your API keys.{Style.RESET_ALL}")
-                    else:
-                        print(f"{Fore.CYAN}Running AI analysis (this may take a while)...{Style.RESET_ALL}")
-                        with open(report_path, 'r', encoding='utf-8') as fh:
-                            report_text = fh.read()
-                        results = generate_ai_report_from_text(report_text, config_path=cfg_path)
-                        ai_out = save_aggregated_report(results, domain=self.domain, out_dir='reports')
-                        print(f"{Fore.GREEN}AI analysis saved to: {Fore.WHITE}{ai_out}{Style.RESET_ALL}")
-            except KeyboardInterrupt:
-                print('\nAI analysis cancelled by user')
-            except Exception as e:
-                print(f"{Fore.RED}AI analysis failed: {e}{Style.RESET_ALL}")
-
+            
             return report_path
         except Exception as e:
             print(f"{Fore.RED}✗ Report generation failed: {e}{Style.RESET_ALL}")
             return None
     
+    def run_ai_analysis(self, report_path: str):
+        """Run AI analysis on the generated report"""
+        config_path = "ai_services.txt"
+        
+        # Check if AI config exists
+        if not os.path.exists(config_path):
+            print(f"\n{Fore.YELLOW}⚠ AI analysis config not found ({config_path}){Style.RESET_ALL}")
+            print(f"{Fore.WHITE}To enable AI analysis, copy ai_services.txt.example to ai_services.txt")
+            print(f"and add your API keys (OpenAI, OpenRouter, or Gemini).{Style.RESET_ALL}")
+            return None
+        
+        # Ask user if they want AI analysis
+        print(f"\n{Fore.CYAN}═══════════════════════════════════════════════════════════════")
+        print(f"                    AI ANALYSIS")
+        print(f"═══════════════════════════════════════════════════════════════{Style.RESET_ALL}\n")
+        
+        print(f"{Fore.WHITE}Would you like to generate an AI-powered expert analysis?{Style.RESET_ALL}")
+        print(f"{Fore.WHITE}The analysis will be provided in both English and Persian (Farsi).{Style.RESET_ALL}\n")
+        
+        choice = input(f"{Fore.GREEN}Generate AI analysis? (y/n): {Style.RESET_ALL}").strip().lower()
+        
+        if choice not in ['y', 'yes', 'بله', 'آره']:
+            print(f"{Fore.YELLOW}Skipping AI analysis.{Style.RESET_ALL}")
+            return None
+        
+        try:
+            print(f"\n{Fore.CYAN}Generating AI analysis... Please wait...{Style.RESET_ALL}")
+            
+            # Read the report content
+            with open(report_path, 'r', encoding='utf-8') as f:
+                report_text = f.read()
+            
+            # Generate AI analysis
+            results = generate_ai_report_from_text(report_text, config_path=config_path)
+            
+            # Check for errors
+            if 'error' in results:
+                print(f"{Fore.RED}✗ AI analysis failed: {results['error']}{Style.RESET_ALL}")
+                return None
+            
+            # Save the AI report
+            ai_report_path = save_aggregated_report(results, domain=self.domain, out_dir='reports')
+            
+            print(f"\n{Fore.GREEN}✓ AI analysis completed!{Style.RESET_ALL}")
+            print(f"{Fore.CYAN}AI Report saved to: {Fore.WHITE}{ai_report_path}{Style.RESET_ALL}")
+            
+            # Show preview of results
+            for provider, res in results.items():
+                if isinstance(res, dict) and 'result' in res:
+                    print(f"\n{Fore.GREEN}✓ {provider}: Analysis generated successfully{Style.RESET_ALL}")
+                elif isinstance(res, dict) and 'error' in res:
+                    print(f"{Fore.RED}✗ {provider}: {res['error']}{Style.RESET_ALL}")
+            
+            return ai_report_path
+            
+        except Exception as e:
+            print(f"{Fore.RED}✗ AI analysis failed: {e}{Style.RESET_ALL}")
+            if self.debug_mode:
+                import traceback
+                traceback.print_exc()
+            return None
+
     def display_quick_summary(self):
         """Display quick summary of scan results"""
         print(f"{Fore.CYAN}═══════════════════════════════════════════════════════════════")
@@ -395,7 +432,11 @@ the format: scan_<domain>_<timestamp>.md
                 if self.get_target_url():
                     selected_modules = self.select_scan_modules()
                     self.run_scan(selected_modules)
-                    self.generate_report()
+                    report_path = self.generate_report()
+                    
+                    # Offer AI analysis
+                    if report_path:
+                        self.run_ai_analysis(report_path)
                     
                     input(f"\n{Fore.YELLOW}Press Enter to return to main menu...{Style.RESET_ALL}")
                 

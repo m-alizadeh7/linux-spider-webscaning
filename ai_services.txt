@@ -1,0 +1,16 @@
+[openai]
+# api_key=sk-...
+# model=gpt-4o-mini
+# temperature=0.2
+
+[openrouter]
+# api_key=or-...
+# model=gpt-4o-mini
+# temperature=0.2
+
+[gemini]
+ api_key=AIzaSyBwwiv3OSPipmkLRyC0_KCC7L0FvXROPI0
+ model=gemini-v1
+ temperature=0.2
+
+# Save as `ai_services.txt` and fill api_key values. Each section will be called in order.
