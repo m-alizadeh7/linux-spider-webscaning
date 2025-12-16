@@ -272,9 +272,9 @@ Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for de
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/YOUR_USERNAME/linux-spider-webscaning/issues)
-- **Documentation**: Check the `docs/` folder for detailed documentation
-- **Discussions**: [GitHub Discussions](https://github.com/YOUR_USERNAME/linux-spider-webscaning/discussions)
+- **Issues**: [GitHub Issues](https://github.com/m-alizadeh7/linux-spider-webscaning/issues)
+- **Documentation**: Check the documentation files for detailed information
+- **Discussions**: [GitHub Discussions](https://github.com/m-alizadeh7/linux-spider-webscaning/discussions)
 
 ## ⭐ Star History
 

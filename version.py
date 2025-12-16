@@ -6,7 +6,7 @@ __version__ = "1.0.0"
 __author__ = "Linux Spider Contributors"
 __license__ = "MIT"
 __copyright__ = "Copyright 2025 Linux Spider Contributors"
-__url__ = "https://github.com/YOUR_USERNAME/linux-spider-webscaning"
+__url__ = "https://github.com/m-alizadeh7/linux-spider-webscaning"
 __description__ = "A comprehensive web scanning tool for Linux systems"
 
 VERSION_INFO = {

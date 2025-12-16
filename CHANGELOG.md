@@ -185,4 +185,4 @@ N/A (initial release)
 
 ---
 
-[1.0.0]: https://github.com/YOUR_USERNAME/linux-spider-webscaning/releases/tag/v1.0.0
+[1.0.0]: https://github.com/m-alizadeh7/linux-spider-webscaning/releases/tag/v1.0.0
