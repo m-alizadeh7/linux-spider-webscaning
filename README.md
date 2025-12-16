@@ -1,4 +1,8 @@
-# 🕷️ Linux Spider - Web Scanning Tool v2.0
+# 🕷️ Linux Spider - Web Scanning Tool
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Platform](https://img.shields.io/badge/platform-linux-lightgrey.svg)](https://www.linux.org/)
 
 A comprehensive web scanning tool for Linux with enhanced debugging capabilities and attractive installation process. Performs detailed analysis of websites including domain information, hosting details, technologies, CMS detection, security, and SEO scanning.
 
@@ -245,14 +249,41 @@ The project is designed to be easily portable across different Linux systems. Si
 ### Version 1.0
 - Initial release with basic scanning functionality
 
+## � Project Status
+
+This project is actively maintained and welcomes contributions. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## 🗺️ Roadmap
+
+- [ ] Add support for subdomain enumeration
+- [ ] Implement parallel scanning for multiple URLs
+- [ ] Add export formats (JSON, CSV, HTML)
+- [ ] Create web interface for results visualization
+- [ ] Add Docker support
+- [ ] Implement API endpoint scanning
+
 ## 📄 License
 
-MIT License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit pull requests or open issues.
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## 📞 Support
+
+- **Issues**: [GitHub Issues](https://github.com/YOUR_USERNAME/linux-spider-webscaning/issues)
+- **Documentation**: Check the `docs/` folder for detailed documentation
+- **Discussions**: [GitHub Discussions](https://github.com/YOUR_USERNAME/linux-spider-webscaning/discussions)
+
+## ⭐ Star History
+
+If you find this project useful, please consider giving it a star! It helps others discover this tool.
 
 ## 👨‍💻 Author
 
 Developed with ❤️ for the Linux community
+
+---
+
+**Note**: Always ensure you have proper authorization before scanning any website. This tool is intended for legitimate security testing and research purposes only.

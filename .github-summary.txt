@@ -1,0 +1,49 @@
+# 🕷️ Linux Spider Web Scanner
+
+![Version](https://img.shields.io/badge/version-1.0-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![Platform](https://img.shields.io/badge/platform-Linux-orange.svg)
+![Status](https://img.shields.io/badge/status-stable-success.svg)
+
+> A comprehensive, professional-grade web scanning tool designed specifically for Linux systems with beautiful UI and advanced debugging capabilities.
+
+## ⚡ Quick Start
+
+\`\`\`bash
+# Install
+./install.sh
+
+# Run
+source venv/bin/activate
+python3 main.py
+\`\`\`
+
+## ✨ Key Features
+
+- 🔍 **6 Scanning Modules**: Domain, Hosting, Tech, CMS, Security, SEO
+- 🎨 **Beautiful UI**: Colored output with progress bars
+- 🐛 **Debug Mode**: Comprehensive logging system
+- 📊 **Professional Reports**: Markdown format with detailed analysis
+- 🚀 **Easy Installation**: Automatic dependency installation
+- 🐧 **Multi-Distro**: Ubuntu, Debian, Fedora, RHEL, Arch Linux
+
+## 📖 Documentation
+
+- [Installation Guide](README.md)
+- [Logger Documentation](LOGGER.md)
+- [Quick Reference](QUICK_REFERENCE.md)
+- [Release Notes](RELEASE_NOTES.md)
+- [Contributing](CONTRIBUTING.md)
+
+## 🤝 Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE)
+
+## 🙏 Credits
+
+Built with ❤️ for the Linux community

@@ -10,6 +10,7 @@ import sys
 import os
 import argparse
 from colorama import init, Fore, Style
+from version import __version__, __description__
 from utils.helpers import normalize_url, extract_domain
 from utils.report_generator import ReportGenerator
 from utils.logger import get_logger, set_debug_mode
@@ -42,7 +43,7 @@ class WebScanner:
 {Fore.CYAN}╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
 ║           {Fore.GREEN}Linux Spider - Web Scanning Tool{Fore.CYAN}                  ║
-║                                                              ║
+║                     {Fore.MAGENTA}Version {__version__}{Fore.CYAN}                              ║
 ║              {Fore.YELLOW}Comprehensive Website Analysis{Fore.CYAN}                   ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝{Style.RESET_ALL}
@@ -406,7 +407,7 @@ def main():
     parser.add_argument(
         '--version', '-v',
         action='version',
-        version='Linux Spider Web Scanner v2.0'
+        version=f'Linux Spider Web Scanner v{__version__}'
     )
     
     args = parser.parse_args()
