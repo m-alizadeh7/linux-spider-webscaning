@@ -39,7 +39,7 @@ env/
 # Reports and Logs
 reports/*.md
 reports/*.txt
-logs/
+logs/*.log
 *.log
 install_debug.log
 
