@@ -61,19 +61,30 @@ def _call_openrouter(api_key: str, model: str, prompt: str, temperature: float =
 
 
 def _call_gemini(api_key: str, model: str, prompt: str, temperature: float = 0.2) -> str:
-    # Gemini (Google) integration varies; this is a best-effort using PaLM REST API.
-    # Users may need to set up a service account or use their own adapter.
-    # Here we attempt the generativelanguage endpoint if an API_KEY is provided.
-    url = f"https://generativelanguage.googleapis.com/v1beta2/models/{model}:generate"
+    # Gemini API v1beta with generateContent endpoint
+    # Supports models like: gemini-2.5-flash, gemini-2.5-pro, gemini-1.5-flash
+    if model in ["gemini-v1", "gemini", "gemini-1.5-flash"]:
+        model = "gemini-2.5-flash"  # Default to latest flash model
+    
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
     headers = {"Content-Type": "application/json"}
     params = {"key": api_key}
-    data = {"prompt": {"text": prompt}, "temperature": temperature}
-    resp = requests.post(url, headers=headers, params=params, json=data, timeout=60)
+    data = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "temperature": temperature,
+            "maxOutputTokens": 4096
+        }
+    }
+    resp = requests.post(url, headers=headers, params=params, json=data, timeout=120)
     resp.raise_for_status()
     j = resp.json()
-    # Response format may vary; attempt to extract text
+    # Extract text from Gemini response
     if "candidates" in j and isinstance(j["candidates"], list):
-        return j["candidates"][0].get("content", "").strip()
+        candidate = j["candidates"][0]
+        if "content" in candidate and "parts" in candidate["content"]:
+            parts = candidate["content"]["parts"]
+            return "".join(p.get("text", "") for p in parts).strip()
     return json.dumps(j)
 
 
