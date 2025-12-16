@@ -265,7 +265,17 @@ class ReportGenerator:
         
         if cms_type == 'WordPress' and cms_data.get('wordpress'):
             wp = cms_data['wordpress']
-            section += f"**WordPress Version:** {wp.get('version', 'Unknown')}\n\n"
+            
+            # Handle version - can be string or dict
+            version_info = wp.get('version', 'Unknown')
+            if isinstance(version_info, dict):
+                version_str = version_info.get('version', 'Unknown')
+                section += f"**WordPress Version:** {version_str}\n"
+                if version_info.get('security_note'):
+                    section += f"- ⚠️ {version_info['security_note']}\n"
+            else:
+                section += f"**WordPress Version:** {version_info}\n"
+            section += "\n"
             
             theme = wp.get('theme', {})
             if theme:
@@ -274,16 +284,41 @@ class ReportGenerator:
                     section += f"- Path: {theme['path']}\n"
                 section += "\n"
             
-            plugins = wp.get('plugins', [])
+            # Handle plugins - can be list or dict with 'detected' key
+            plugins_data = wp.get('plugins', [])
+            if isinstance(plugins_data, dict):
+                plugins = plugins_data.get('detected', [])
+            else:
+                plugins = plugins_data if isinstance(plugins_data, list) else []
+            
             if plugins:
                 section += f"**Detected Plugins:** ({len(plugins)})\n"
                 for plugin in plugins[:20]:  # Limit to first 20
-                    section += f"- {plugin}\n"
+                    if isinstance(plugin, dict):
+                        plugin_name = plugin.get('name', str(plugin))
+                        plugin_cat = plugin.get('category', '')
+                        if plugin_cat:
+                            section += f"- {plugin_name} ({plugin_cat})\n"
+                        else:
+                            section += f"- {plugin_name}\n"
+                    else:
+                        section += f"- {plugin}\n"
                 if len(plugins) > 20:
                     section += f"- ... and {len(plugins) - 20} more\n"
                 section += "\n"
             
-            section += f"**REST API Exposed:** {'Yes' if wp.get('api_exposed') else 'No'}\n\n"
+            # Handle API - can be bool or dict
+            api_info = wp.get('api', wp.get('api_exposed'))
+            if isinstance(api_info, dict):
+                api_exposed = api_info.get('enabled', False)
+            else:
+                api_exposed = bool(api_info)
+            section += f"**REST API Exposed:** {'Yes' if api_exposed else 'No'}\n\n"
+            
+            # SEO config
+            seo_config = wp.get('seo_config', {})
+            if seo_config.get('has_seo_plugin'):
+                section += f"**SEO Plugin:** {seo_config.get('seo_plugin_name', 'Detected')}\n\n"
         
         elif cms_type == 'Joomla' and cms_data.get('joomla'):
             joomla = cms_data['joomla']
@@ -357,7 +392,13 @@ class ReportGenerator:
         
         section += "\n### Common Files Check\n\n"
         
-        exposed_files = [f for f, accessible in common_files.items() if accessible]
+        # Handle new format: {'accessible': [...], 'checked': N}
+        if isinstance(common_files, dict) and 'accessible' in common_files:
+            exposed_files = common_files.get('accessible', [])
+        else:
+            # Legacy format: {file: bool, ...}
+            exposed_files = [f for f, accessible in common_files.items() if accessible]
+        
         if exposed_files:
             section += "**Exposed Files:**\n"
             for file in exposed_files:
