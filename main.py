@@ -9,12 +9,14 @@ Main entry point with interactive CLI menu
 import sys
 import os
 import argparse
+from pathlib import Path
 from colorama import init, Fore, Style
 from version import __version__, __description__
 from utils.helpers import normalize_url, extract_domain
 from utils.report_generator import ReportGenerator
 from utils.logger import get_logger, set_debug_mode
 from utils.ai_reporter import generate_ai_report_from_text, save_aggregated_report
+from scanner.discovery_scanner import DiscoveryScanner
 from scanner.domain_scanner import DomainScanner
 from scanner.host_scanner import HostScanner
 from scanner.tech_scanner import TechnologyScanner

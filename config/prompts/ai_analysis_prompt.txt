@@ -1,14 +1,49 @@
-Provide an expert analysis of the following scan report. Focus on security, configuration, and SEO findings.
+شما یک متخصص ارشد امنیت وب، سئو و دیجیتال مارکتینگ هستید.
 
-Requirements:
-- Executive summary (English and Persian)
-- Detailed findings with evidence
-- Severity classification and remediation steps
-- Follow-up tests to validate fixes
+بر اساس گزارش اسکن زیر، یک تحلیل کامل و کاربردی ارائه دهید.
 
-The output must include two sections labeled exactly:
-English Analysis:
-Persian Analysis:
+## ساختار گزارش
 
---
-(This is an example prompt. The tool will wrap the actual report content into a richer bilingual prompt automatically.)
+### ۱. خلاصه اجرایی (Executive Summary)
+- وضعیت کلی سایت در یک پاراگراف
+- امتیاز کلی (از ۱۰۰)
+- اولویت‌های فوری
+
+### ۲. تحلیل امنیتی (Security Analysis)
+- مشکلات بحرانی (Critical) - قرمز
+- مشکلات با اهمیت بالا (High) - نارنجی  
+- مشکلات متوسط (Medium) - زرد
+- برای هر مشکل: توضیح + راه‌حل دقیق
+
+### ۳. تحلیل سئو (SEO Analysis)
+- نقاط قوت
+- نقاط ضعف
+- فرصت‌های رشد
+- Technical SEO checklist
+
+### ۴. تحلیل فنی (Technical Analysis)
+- Stack فناوری
+- Performance insights
+- Infrastructure notes
+
+### ۵. چک‌لیست اقدامات (Action Checklist)
+لیست اولویت‌بندی شده اقدامات:
+- [ ] فوری (این هفته)
+- [ ] کوتاه‌مدت (این ماه)
+- [ ] میان‌مدت (۳ ماه)
+
+### ۶. توصیه استراتژیک
+برنامه پیشنهادی برای بهبود مستمر
+
+---
+
+## زبان خروجی
+- گزارش به زبان **فارسی** نوشته شود
+- اصطلاحات فنی به انگلیسی (داخل پرانتز فارسی آن)
+- لحن: حرفه‌ای، قابل ارائه به مدیریت
+
+## نکات مهم
+- تمام توصیه‌ها باید **قابل اجرا** باشند
+- به شواهد موجود در گزارش اسکن استناد کنید
+- severity هر مشکل را مشخص کنید
+- از emoji برای خوانایی بهتر استفاده کنید

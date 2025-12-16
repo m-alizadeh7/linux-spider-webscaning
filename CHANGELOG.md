@@ -5,6 +5,68 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2025-12-17
+
+### 🎯 Major Update: Professional Web Intelligence Platform
+
+This release transforms Linux Spider into a comprehensive web intelligence and competitor analysis platform.
+
+### ✨ New Features
+
+#### 🔍 Discovery Scanner (Phase 0)
+- **robots.txt Analysis**: Parse and analyze robots.txt for security insights
+- **Sitemap Discovery**: Automatic sitemap.xml parsing and URL extraction
+- **URL Categorization**: Automatic classification of discovered URLs
+  - Main pages, Money pages, Blog pages, Admin pages
+- **Security Insights**: Identify sensitive paths exposed in robots.txt
+
+#### 🌐 Enhanced Domain Scanner
+- **Multi-source WHOIS**: Three-tier lookup system
+  1. RDAP (most reliable, structured data)
+  2. System whois CLI
+  3. python-whois library (fallback)
+- **Confidence Level**: Data reliability scoring (0-100%)
+- **Infrastructure Detection**: CDN, WAF, Hosting provider identification
+- **ASN Lookup**: Autonomous System Number detection
+
+#### 🔐 Advanced Security Scanner
+- **Severity Classification**: Critical / High / Medium / Low / Info
+- **Actionable Recommendations**: Specific fix instructions for each finding
+- **Sensitive File Detection**: Extended checks for exposed files
+- **Admin Path Discovery**: Identify exposed admin panels
+- **Security Score**: Calculated based on findings severity
+- **SSL/TLS Grading**: A-F grade for SSL configuration
+
+#### 📦 Deep WordPress Analysis
+- **Plugin Categorization**: SEO, Security, Performance, Builder, E-commerce
+- **Vulnerability Warnings**: Known vulnerable plugin detection
+- **Security Checks**: XML-RPC, debug.log, readme.html exposure
+- **SEO Configuration**: Detect SEO plugins and schema markup
+- **User Enumeration**: Limited ethical author enumeration
+- **Recommendations Engine**: WordPress-specific improvement suggestions
+
+#### 🤖 AI Report Improvements
+- **Persian-First Reports**: Default output in professional Persian (Farsi)
+- **Analysis Types**: Competitor analysis vs Own site analysis
+- **Structured Output**: Executive summary, Security, SEO, Technical, Action checklist
+- **Improved Prompts**: Professional management-ready reports
+
+### 🔧 Bug Fixes
+- Fixed `Path not defined` error in Settings menu
+- Fixed menu handler for 5-option menu structure
+
+### 📁 New Files
+- `scanner/discovery_scanner.py` - Site discovery and crawling
+- `config/prompts/ai_analysis_prompt.txt` - Persian AI prompt template
+
+### 🔄 Changed
+- Domain scanner now returns infrastructure info
+- Security scanner outputs prioritized recommendations
+- CMS scanner provides deep WordPress insights
+- AI reporter supports target_type parameter
+
+---
+
 ## [1.1.0] - 2025-07-29
 
 ### ✨ Added
