@@ -20,6 +20,7 @@ from scanner.tech_scanner import TechnologyScanner
 from scanner.cms_scanner import CMSScanner
 from scanner.security_scanner import SecurityScanner
 from scanner.seo_scanner import SEOScanner
+from utils.ai_reporter import generate_ai_report_from_text, save_aggregated_report
 
 # Initialize colorama for cross-platform colored terminal output
 init(autoreset=True)
@@ -251,7 +252,32 @@ class WebScanner:
             
             # Display quick summary
             self.display_quick_summary()
-            
+            # Offer to run AI-powered bilingual analysis if configured
+            try:
+                run_ai = None
+                # If debug mode enabled, default to yes
+                if self.debug_mode:
+                    run_ai = True
+                else:
+                    ans = input('Would you like to run AI analysis for this report and save a bilingual (EN/FA) summary? [Y/n]: ').strip().lower()
+                    run_ai = (ans == '' or ans == 'y' or ans == 'yes')
+
+                if run_ai:
+                    cfg_path = 'ai_services.txt'
+                    if not os.path.exists(cfg_path):
+                        print(f"{Fore.YELLOW}AI config not found ({cfg_path}). Create {cfg_path} from ai_services.txt.example and add your API keys.{Style.RESET_ALL}")
+                    else:
+                        print(f"{Fore.CYAN}Running AI analysis (this may take a while)...{Style.RESET_ALL}")
+                        with open(report_path, 'r', encoding='utf-8') as fh:
+                            report_text = fh.read()
+                        results = generate_ai_report_from_text(report_text, config_path=cfg_path)
+                        ai_out = save_aggregated_report(results, domain=self.domain, out_dir='reports')
+                        print(f"{Fore.GREEN}AI analysis saved to: {Fore.WHITE}{ai_out}{Style.RESET_ALL}")
+            except KeyboardInterrupt:
+                print('\nAI analysis cancelled by user')
+            except Exception as e:
+                print(f"{Fore.RED}AI analysis failed: {e}{Style.RESET_ALL}")
+
             return report_path
         except Exception as e:
             print(f"{Fore.RED}✗ Report generation failed: {e}{Style.RESET_ALL}")
