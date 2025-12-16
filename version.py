@@ -2,7 +2,7 @@
 Version information for Linux Spider Web Scanner
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __author__ = "Linux Spider Contributors"
 __license__ = "MIT"
 __copyright__ = "Copyright 2025 Linux Spider Contributors"
@@ -11,10 +11,10 @@ __description__ = "A comprehensive web scanning tool for Linux systems"
 
 VERSION_INFO = {
     "major": 1,
-    "minor": 0,
+    "minor": 1,
     "patch": 0,
     "release": "stable",
-    "build": "20251217"
+    "build": "20250729"
 }
 
 def get_version():

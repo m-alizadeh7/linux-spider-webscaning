@@ -1,0 +1,27 @@
+# AI Services Configuration
+# Copy this file to 'ai_services.txt' and add your API keys
+# IMPORTANT: Never commit ai_services.txt to version control!
+
+[openai]
+# Get your API key from: https://platform.openai.com/api-keys
+# api_key=sk-your-openai-key-here
+# model=gpt-4o-mini
+# temperature=0.2
+
+[openrouter]
+# Get your API key from: https://openrouter.ai/keys
+# api_key=sk-or-your-openrouter-key-here
+# model=anthropic/claude-3-haiku
+# temperature=0.2
+
+[gemini]
+# Get your API key from: https://aistudio.google.com/apikey
+# api_key=your-gemini-api-key-here
+# model=gemini-2.5-flash
+# temperature=0.2
+
+# Usage:
+# 1. Uncomment the provider you want to use
+# 2. Add your API key
+# 3. Save as 'ai_services.txt' (not .example)
+# 4. Run the scanner and choose 'y' when asked for AI analysis

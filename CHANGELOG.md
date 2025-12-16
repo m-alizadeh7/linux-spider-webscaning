@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-07-29
+
+### ✨ Added
+
+#### AI-Powered Analysis
+- **AI Expert Analysis**: Intelligent report analysis using multiple AI providers
+  - OpenAI integration (GPT models)
+  - Google Gemini integration (gemini-2.5-flash)
+  - OpenRouter integration (multiple models)
+  - Bilingual reports (English + Persian/Farsi)
+  - Expert-level security and SEO recommendations
+
+#### UI Improvements
+- **New ASCII Art Banner**: Modern and clean terminal interface
+- **Settings Menu**: New configuration menu (option 3)
+- **Improved Menu Design**: Better visual organization with emojis
+
+#### Project Organization
+- **Config Directory**: Centralized configuration files
+- **Better .gitignore**: Enhanced security for API keys and reports
+- **Documentation Updates**: Improved README and guides
+
+### 🔒 Security
+- API keys are now stored in `config/ai_services.txt` (not tracked by git)
+- Scan reports excluded from version control
+- Sensitive data protection improvements
+
+### 📁 Changed
+- Menu structure updated (5 options instead of 4)
+- Configuration files moved to `config/` directory
+- Version display updated in banner
+
+---
+
 ## [1.0.0] - 2025-12-17
 
 ### 🎉 Initial Release

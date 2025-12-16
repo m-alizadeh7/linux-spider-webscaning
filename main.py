@@ -41,38 +41,37 @@ class WebScanner:
     def display_banner(self):
         """Display application banner"""
         banner = f"""
-{Fore.CYAN}╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║           {Fore.GREEN}Linux Spider - Web Scanning Tool{Fore.CYAN}                  ║
-║                     {Fore.MAGENTA}Version {__version__}{Fore.CYAN}                              ║
-║              {Fore.YELLOW}Comprehensive Website Analysis{Fore.CYAN}                   ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝{Style.RESET_ALL}
-
-{Fore.WHITE}A powerful tool for analyzing websites including:
-• Domain & WHOIS Information
-• Hosting & Infrastructure  
-• Technology Detection
-• CMS Analysis (WordPress, Joomla, Drupal)
-• Security Scanning
-• SEO Analysis
+{Fore.CYAN}
+    ██╗     ██╗███╗   ██╗██╗   ██╗██╗  ██╗    ███████╗██████╗ ██╗██████╗ ███████╗██████╗ 
+    ██║     ██║████╗  ██║██║   ██║╚██╗██╔╝    ██╔════╝██╔══██╗██║██╔══██╗██╔════╝██╔══██╗
+    ██║     ██║██╔██╗ ██║██║   ██║ ╚███╔╝     ███████╗██████╔╝██║██║  ██║█████╗  ██████╔╝
+    ██║     ██║██║╚██╗██║██║   ██║ ██╔██╗     ╚════██║██╔═══╝ ██║██║  ██║██╔══╝  ██╔══██╗
+    ███████╗██║██║ ╚████║╚██████╔╝██╔╝ ██╗    ███████║██║     ██║██████╔╝███████╗██║  ██║
+    ╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝    ╚══════╝╚═╝     ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
 {Style.RESET_ALL}
+{Fore.GREEN}                    🕷️  Web Scanning Tool v{__version__}  🕷️{Style.RESET_ALL}
+{Fore.YELLOW}                     Comprehensive Website Analysis{Style.RESET_ALL}
+
+{Fore.WHITE}┌─────────────────────────────────────────────────────────────────┐
+│  📡 Domain & WHOIS    │  🖥️  Hosting & DNS   │  🔧 Technology    │
+│  📦 CMS Detection     │  🔒 Security Scan    │  📊 SEO Analysis  │
+│  🤖 AI Expert Report  │  📝 Detailed Reports │  🌐 Multi-Target  │
+└─────────────────────────────────────────────────────────────────┘{Style.RESET_ALL}
 """
         print(banner)
     
     def display_menu(self):
         """Display main menu"""
         menu = f"""
-{Fore.CYAN}═══════════════════════════════════════════════════════════════
-                        MAIN MENU
-═══════════════════════════════════════════════════════════════{Style.RESET_ALL}
-
-{Fore.GREEN}1.{Style.RESET_ALL} Start New Scan
-{Fore.GREEN}2.{Style.RESET_ALL} View Recent Reports
-{Fore.GREEN}3.{Style.RESET_ALL} About
-{Fore.GREEN}4.{Style.RESET_ALL} Exit
-
-{Fore.CYAN}═══════════════════════════════════════════════════════════════{Style.RESET_ALL}
+{Fore.CYAN}┌─────────────────────────────────────────────────────────────────┐
+│                         MAIN MENU                               │
+├─────────────────────────────────────────────────────────────────┤{Style.RESET_ALL}
+│  {Fore.GREEN}[1]{Style.RESET_ALL} 🔍 Start New Scan                                        │
+│  {Fore.GREEN}[2]{Style.RESET_ALL} 📂 View Recent Reports                                   │
+│  {Fore.GREEN}[3]{Style.RESET_ALL} ⚙️  Settings & Configuration                             │
+│  {Fore.GREEN}[4]{Style.RESET_ALL} ℹ️  About                                                 │
+│  {Fore.GREEN}[5]{Style.RESET_ALL} 🚪 Exit                                                  │
+{Fore.CYAN}└─────────────────────────────────────────────────────────────────┘{Style.RESET_ALL}
 """
         print(menu)
     
@@ -260,12 +259,12 @@ class WebScanner:
     
     def run_ai_analysis(self, report_path: str):
         """Run AI analysis on the generated report"""
-        config_path = "ai_services.txt"
+        config_path = "config/ai_services.txt"
         
         # Check if AI config exists
         if not os.path.exists(config_path):
             print(f"\n{Fore.YELLOW}⚠ AI analysis config not found ({config_path}){Style.RESET_ALL}")
-            print(f"{Fore.WHITE}To enable AI analysis, copy ai_services.txt.example to ai_services.txt")
+            print(f"{Fore.WHITE}To enable AI analysis, copy config/ai_services.txt.example to config/ai_services.txt")
             print(f"and add your API keys (OpenAI, OpenRouter, or Gemini).{Style.RESET_ALL}")
             return None
         
@@ -418,6 +417,38 @@ the format: scan_<domain>_<timestamp>.md
 """
         print(about)
     
+    def display_settings(self):
+        """Display settings and configuration menu"""
+        ai_config_path = Path("config/ai_services.txt")
+        ai_status = f"{Fore.GREEN}✓ Configured{Style.RESET_ALL}" if ai_config_path.exists() else f"{Fore.YELLOW}✗ Not configured{Style.RESET_ALL}"
+        
+        settings = f"""
+{Fore.CYAN}╔═══════════════════════════════════════════════════════════════╗
+║                    ⚙️  SETTINGS & CONFIGURATION                 ║
+╚═══════════════════════════════════════════════════════════════╝{Style.RESET_ALL}
+
+{Fore.WHITE}📁 Configuration Files:{Style.RESET_ALL}
+────────────────────────────────────────────────────
+  AI Services Config:  config/ai_services.txt
+  Status:              {ai_status}
+  
+{Fore.WHITE}📂 Output Directories:{Style.RESET_ALL}
+────────────────────────────────────────────────────
+  Reports:   reports/
+  Logs:      logs/
+
+{Fore.WHITE}🤖 AI Analysis Setup:{Style.RESET_ALL}
+────────────────────────────────────────────────────
+  1. Copy 'config/ai_services.txt.example' to 'config/ai_services.txt'
+  2. Add your API key for one of the services:
+     • OpenAI (OPENAI_API_KEY=sk-...)
+     • Gemini (GEMINI_API_KEY=...)
+     • OpenRouter (OPENROUTER_API_KEY=...)
+
+{Fore.CYAN}═══════════════════════════════════════════════════════════════{Style.RESET_ALL}
+"""
+        print(settings)
+    
     def run(self):
         """Main application loop"""
         self.display_banner()
@@ -425,7 +456,7 @@ the format: scan_<domain>_<timestamp>.md
         while True:
             self.display_menu()
             
-            choice = input(f"{Fore.GREEN}Select option (1-4): {Style.RESET_ALL}").strip()
+            choice = input(f"{Fore.GREEN}Select option (1-5): {Style.RESET_ALL}").strip()
             
             if choice == '1':
                 # Start new scan
@@ -446,18 +477,23 @@ the format: scan_<domain>_<timestamp>.md
                 input(f"\n{Fore.YELLOW}Press Enter to return to main menu...{Style.RESET_ALL}")
             
             elif choice == '3':
+                # Settings & Configuration
+                self.display_settings()
+                input(f"\n{Fore.YELLOW}Press Enter to return to main menu...{Style.RESET_ALL}")
+            
+            elif choice == '4':
                 # About
                 self.display_about()
                 input(f"\n{Fore.YELLOW}Press Enter to return to main menu...{Style.RESET_ALL}")
             
-            elif choice == '4':
+            elif choice == '5':
                 # Exit
                 print(f"\n{Fore.CYAN}Thank you for using Linux Spider Web Scanner!{Style.RESET_ALL}")
                 print(f"{Fore.WHITE}Goodbye!{Style.RESET_ALL}\n")
                 sys.exit(0)
             
             else:
-                print(f"\n{Fore.RED}✗ Invalid option. Please select 1-4.{Style.RESET_ALL}\n")
+                print(f"\n{Fore.RED}✗ Invalid option. Please select 1-5.{Style.RESET_ALL}\n")
 
 
 def main():

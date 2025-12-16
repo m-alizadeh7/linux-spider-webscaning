@@ -125,7 +125,7 @@ def build_bilingual_prompt(base_prompt: str) -> str:
     return f"{wrapper}{base_prompt}\n\n{follow}{extensibility}"
 
 
-def generate_ai_report_from_text(report_text: str, config_path: str = "ai_services.txt") -> Dict[str, Any]:
+def generate_ai_report_from_text(report_text: str, config_path: str = "config/ai_services.txt") -> Dict[str, Any]:
     """Read configuration and call configured providers to generate AI analyses.
 
     Returns a dict mapping provider -> text result or error message.

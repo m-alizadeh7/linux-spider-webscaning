@@ -36,12 +36,19 @@ env/
 *~
 .DS_Store
 
-# Reports and Logs
+# Reports and Logs - keep directory but ignore contents
 reports/*.md
 reports/*.txt
 logs/*.log
 *.log
 install_debug.log
+!reports/.gitkeep
+!logs/.gitkeep
+
+# API Configuration - IMPORTANT: Never commit API keys!
+config/ai_services.txt
+config/api_keys.txt
+*.api_key
 
 # OS
 .DS_Store
@@ -52,6 +59,7 @@ Thumbs.db
 # Environment variables
 .env
 .env.local
+.env.*.local
 
 # Test files
 test_*.py
