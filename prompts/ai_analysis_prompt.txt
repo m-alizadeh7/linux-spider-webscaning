@@ -1,0 +1,14 @@
+Provide an expert analysis of the following scan report. Focus on security, configuration, and SEO findings.
+
+Requirements:
+- Executive summary (English and Persian)
+- Detailed findings with evidence
+- Severity classification and remediation steps
+- Follow-up tests to validate fixes
+
+The output must include two sections labeled exactly:
+English Analysis:
+Persian Analysis:
+
+--
+(This is an example prompt. The tool will wrap the actual report content into a richer bilingual prompt automatically.)
