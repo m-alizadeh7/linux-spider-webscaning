@@ -1,89 +1,129 @@
-# 🕷️ Linux Spider - Web Scanning Tool
+# 🕷️ Linux Spider - Advanced Web Intelligence Platform
 
+[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/m-alizadeh7/linux-spider-webscaning)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Platform](https://img.shields.io/badge/platform-linux-lightgrey.svg)](https://www.linux.org/)
 
-A comprehensive web scanning tool for Linux with enhanced debugging capabilities and attractive installation process. Performs detailed analysis of websites including domain information, hosting details, technologies, CMS detection, security, and SEO scanning.
+A comprehensive web intelligence and SEO analysis platform for Linux. Performs deep analysis of websites including domain information, hosting infrastructure, technology detection, CMS analysis, security auditing, SEO evaluation, content extraction, and AI-powered reporting.
 
-## ✨ Features
+---
 
-- **Domain Information**: Registration date, renewal date, expiration date
-- **Hosting Information**: Server details, IP addresses, DNS records
-- **Technology Detection**: Identify frameworks, libraries, and technologies used
-- **CMS Scanning**: Detect CMS platforms (especially WordPress), plugins, and themes
-- **Security Scanning**: Check for common security issues and vulnerabilities
-- **SEO Analysis**: Analyze SEO-related factors and website structure
-- **Comprehensive Reports**: Generate detailed reports in TXT/MD format
-- **🆕 Internal Debug Logger**: Advanced logging with colored output and file logging
-- **🆕 Enhanced Installation**: Beautiful progress bars and detailed error reporting
-- **🆕 Debug Mode**: Run with `--debug` flag for detailed troubleshooting
+## ✨ Features Overview
+
+| Module | Description |
+|--------|-------------|
+| 📡 **Domain Scanner** | WHOIS, DNS records, domain age, expiration alerts |
+| 🖥️ **Host Scanner** | Server info, SSL/TLS, security headers, response metrics |
+| 🔧 **Technology Detection** | CMS, frameworks, libraries, meta generators |
+| 📦 **CMS Analysis** | WordPress deep scan, plugins, themes, vulnerabilities |
+| 🔒 **Security Scanner** | Headers, SSL grading, sensitive files, port scanning |
+| 📊 **SEO Analysis** | Meta tags, headings, content analysis, performance |
+| 📝 **Content Scanner** | Article extraction, product detection, sitemap parsing |
+| ⚙️ **Technical SEO** | Canonical, robots.txt, sitemap, mobile-friendliness |
+| 📄 **On-Page SEO** | Title, meta description, heading hierarchy, content quality |
+| 🔍 **Schema Validator** | JSON-LD, Microdata, RDFa validation |
+| 🤖 **AI Analysis** | Expert reports via Gemini, OpenAI, OpenRouter |
+
+---
+
+## 🆕 What's New in v1.5.0
+
+### Content & SEO Intelligence Suite
+- **Article Extractor**: Automatic detection and extraction of blog posts and articles
+- **Product Extractor**: E-commerce product catalog detection with pricing
+- **Sitemap Discovery**: Parse XML sitemaps with URL categorization
+- **RSS/Atom Discovery**: Feed detection and content sampling
+
+### Advanced SEO Modules
+- **Technical SEO Analysis**: HTTPS, canonical, robots.txt, sitemap, mobile viewport, TTFB
+- **On-Page SEO Analysis**: Title optimization, meta description, heading hierarchy, content quality
+- **Schema.org Validator**: Validate structured data (JSON-LD, Microdata, RDFa)
+
+### Enhanced Reporting
+- **12-Section Reports**: Comprehensive markdown reports with all scan data
+- **Score Grades**: Visual grading system (🟢 Excellent → 🔴 Needs Improvement)
+- **Issues & Recommendations**: Prioritized fixes with impact levels
+- **Bilingual AI Reports**: Professional analysis in English and Persian
+
+### Bug Fixes & Improvements
+- Fixed NoneType errors in report generation
+- Improved Gemini API fallback (2.5 → 2.0 model)
+- Better error handling throughout
+
+---
 
 ## 📋 Requirements
 
-- Linux operating system (compatible with all distributions)
-- Python 3.8 or higher
-- nmap (for port scanning)
-- python3-venv (automatically installed by the installer)
+| Requirement | Version |
+|-------------|---------|
+| Linux OS | Any distribution |
+| Python | 3.8+ |
+| nmap | Latest |
+| pip | Latest |
 
-## 🚀 Quick Installation
+### Python Dependencies
 
-### Automatic Installation (Recommended)
+```
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=5.0.0
+python-whois>=0.8.0
+dnspython>=2.4.0
+python-nmap>=0.7.1
+builtwith>=1.3.13
+colorama>=0.4.6
+tldextract>=5.1.0
+validators>=0.22.0
+extruct>=0.16.0
+feedparser>=6.0.10
+```
 
-Simply run the enhanced installation script:
+---
+
+## 🚀 Installation
+
+### Quick Install (Recommended)
 
 ```bash
+git clone https://github.com/m-alizadeh7/linux-spider-webscaning.git
+cd linux-spider-webscaning
 chmod +x install.sh
 ./install.sh
 ```
 
-The installer will:
-- ✅ Check all system requirements
-- ✅ Automatically install missing dependencies
-- ✅ Create and configure virtual environment
-- ✅ Install all Python packages
-- ✅ Show beautiful progress bars
-- ✅ Provide detailed error messages
-
 ### Debug Installation
-
-If you encounter any issues during installation, run with debug mode:
 
 ```bash
 ./install.sh --debug
 ```
 
-This will:
-- Show detailed debug information
-- Log everything to `install_debug.log`
-- Help diagnose any installation problems
-
 ### Manual Installation
 
-If you prefer manual installation:
-
 ```bash
-# Install system dependencies
+# System dependencies
 sudo apt-get update
 sudo apt-get install -y python3 python3-pip python3-venv nmap
 
-# Create virtual environment
+# Virtual environment
 python3 -m venv venv
 source venv/bin/activate
 
-# Install Python dependencies
+# Python packages
 pip install -r requirements.txt
 ```
 
+---
+
 ## 💻 Usage
 
-### Basic Usage
+### Running the Scanner
 
 ```bash
-# Activate virtual environment (if not already activated)
+# Activate environment
 source venv/bin/activate
 
-# Run the scanner
+# Run scanner
 python3 main.py
 
 # Or use the run script
@@ -92,198 +132,233 @@ python3 main.py
 
 ### Debug Mode
 
-For detailed logging and troubleshooting:
-
 ```bash
 python3 main.py --debug
 ```
 
-Debug mode features:
-- 📝 Detailed console output with debug messages
-- 📋 Comprehensive log files in `logs/` directory
-- 🎨 Colored output for better readability
-- ⏱️ Execution time tracking
-- 🔍 Step-by-step process logging
-
-### Interactive Menu
-
-Follow the interactive menu to:
-1. Enter the target website URL
-2. Select scanning modules
-3. View progress and results
-4. Generate comprehensive report
-
 ### Command Line Options
 
 ```bash
-python3 main.py --help      # Show help message
-python3 main.py --version   # Show version
-python3 main.py --debug     # Enable debug mode
+python3 main.py --help      # Show help
+python3 main.py --version   # Show version (1.5.0)
+python3 main.py --debug     # Enable debug logging
 ```
 
-## Report Output
+---
 
-Reports are saved in the `reports/` directory with the following naming format:
+## 🎯 Scan Modules
+
+### Module Selection Menu
+
 ```
-scan_<domain>_<timestamp>.md
+[✓] 1. Domain Information
+[✓] 2. Hosting & Infrastructure  
+[✓] 3. Technology Detection
+[✓] 4. CMS Analysis
+[✓] 5. Security Scanning
+[✓] 6. SEO Analysis
+[✓] 7. Content & Products (NEW)
+
+8. Run All (Default)
+9. Continue with selection
 ```
 
-Each report includes:
-- Scan metadata (date, time, target)
-- Domain information
-- Hosting and infrastructure details
-- Detected technologies
-- CMS analysis (if applicable)
-- Security findings
-- SEO metrics
-- Recommendations
+---
+
+## 📊 Report Structure (12 Sections)
+
+| # | Section | Content |
+|---|---------|---------|
+| 1 | Domain Information | WHOIS, DNS records, IP addresses |
+| 2 | Hosting & Infrastructure | Server, SSL/TLS, security headers |
+| 3 | Technology Stack | CMS, frameworks, libraries, generators |
+| 4 | CMS Analysis | WordPress/Joomla/Drupal deep scan |
+| 5 | Security Analysis | Score, headers, vulnerabilities, ports |
+| 6 | SEO Analysis | Meta tags, headings, content, links |
+| 7 | Articles & Content | Sitemap URLs, RSS feeds, articles |
+| 8 | Products Analysis | E-commerce products, pricing |
+| 9 | Schema.org Validation | Structured data, validity rate |
+| 10 | Technical SEO | HTTPS, canonical, robots, sitemap |
+| 11 | On-Page SEO | Title, description, headings, images |
+| 12 | Summary & Recommendations | All scores, overall grade, actions |
+
+---
 
 ## 📁 Project Structure
 
 ```
 linux-spider-webscaning/
-├── main.py                    # Main entry point with interactive menu
-├── install.sh                 # Enhanced installation script with debug mode
-├── run.sh                     # Quick run script
-├── requirements.txt           # Python dependencies
-├── scanner/                   # Scanner modules
-│   ├── __init__.py
-│   ├── domain_scanner.py      # Domain information scanning
-│   ├── host_scanner.py        # Hosting and infrastructure scanning
-│   ├── tech_scanner.py        # Technology detection
-│   ├── cms_scanner.py         # CMS detection (WordPress focus)
-│   ├── security_scanner.py    # Security scanning
-│   └── seo_scanner.py         # SEO analysis
-├── utils/                     # Utility modules
-│   ├── __init__.py
-│   ├── http_client.py         # HTTP client with random User-Agent
-│   ├── report_generator.py    # Report generation
-│   ├── logger.py              # 🆕 Internal debug logger with colored output
-│   └── helpers.py             # Helper functions
-├── reports/                   # Generated scan reports
-└── logs/                      # 🆕 Debug and execution logs (created in debug mode)
+├── main.py                      # Main entry point
+├── version.py                   # Version info (1.5.0)
+├── install.sh                   # Installation script
+├── run.sh                       # Quick run script
+├── requirements.txt             # Python dependencies
+│
+├── scanner/                     # Scanner modules
+│   ├── domain_scanner.py        # Domain & WHOIS
+│   ├── host_scanner.py          # Hosting & SSL
+│   ├── tech_scanner.py          # Technology detection
+│   ├── cms_scanner.py           # CMS analysis
+│   ├── security_scanner.py      # Security scanning
+│   ├── seo_scanner.py           # SEO analysis
+│   ├── discovery_scanner.py     # robots.txt & sitemap
+│   ├── content_scanner.py       # Content orchestrator
+│   │
+│   ├── content/                 # Content extraction
+│   │   ├── article_extractor.py # Article detection
+│   │   ├── product_extractor.py # E-commerce products
+│   │   ├── sitemap_discovery.py # XML sitemap parsing
+│   │   ├── rss_discovery.py     # RSS/Atom feeds
+│   │   └── url_sampler.py       # URL sampling
+│   │
+│   ├── seo/                     # SEO modules
+│   │   ├── technical.py         # Technical SEO checks
+│   │   ├── onpage.py            # On-page SEO analysis
+│   │   └── schema_validator.py  # Schema.org validation
+│   │
+│   └── providers/               # External integrations
+│       └── builtwith_provider.py
+│
+├── utils/                       # Utility modules
+│   ├── http_client.py           # HTTP client
+│   ├── report_generator.py      # Markdown report generator
+│   ├── ai_reporter.py           # AI analysis (Gemini/OpenAI)
+│   ├── logger.py                # Debug logger
+│   └── helpers.py               # Helper functions
+│
+├── config/                      # Configuration
+│   ├── ai_services.txt          # API keys (not in git)
+│   └── prompts/                 # AI prompts
+│       └── ai_analysis_prompt.txt
+│
+├── reports/                     # Generated reports
+└── logs/                        # Debug logs
 ```
 
-## 🎯 Features in Detail
+---
 
-### 🆕 Enhanced Installation Script
+## 🤖 AI Analysis
 
-The new installation script provides:
+### Supported Providers
 
-- **Visual Progress Bars**: See installation progress in real-time
-- **Colored Output**: Easy-to-read colored messages for success, warnings, and errors
-- **Automatic Dependency Detection**: Automatically detects and installs missing system packages
-- **Distribution Detection**: Supports Debian/Ubuntu, Fedora, RHEL/CentOS, and Arch Linux
-- **Debug Mode**: Run `./install.sh --debug` for detailed logging
-- **Error Recovery**: Clear error messages with suggestions for fixing issues
-- **Smart Virtual Environment Management**: Cleans old environments and creates fresh ones
+| Provider | Models | Configuration |
+|----------|--------|---------------|
+| **Google Gemini** | gemini-2.0-flash, gemini-2.5-flash | API key in config |
+| **OpenAI** | gpt-4, gpt-3.5-turbo | API key in config |
+| **OpenRouter** | Various models | API key in config |
 
-### 🆕 Internal Debug Logger
+### Configuration
 
-The new logger utility provides:
+Create `config/ai_services.txt`:
 
-- **Colored Console Output**: Different colors for different log levels
-- **File Logging**: Automatic log file generation with timestamps
-- **Debug Mode**: Enable with `--debug` flag for detailed diagnostics
-- **Structured Logging**: Log dictionaries, lists, and complex data structures
-- **Progress Tracking**: Built-in progress bars and step counters
-- **Execution Time Tracking**: Monitor performance of operations
-- **Exception Handling**: Automatic exception logging with stack traces
+```
+gemini=YOUR_GEMINI_API_KEY
+openai=YOUR_OPENAI_API_KEY
+openrouter=YOUR_OPENROUTER_API_KEY
+```
 
-### User-Agent Randomization
+### Analysis Types
 
-The tool uses random User-Agent headers to avoid detection and blocking.
+- **Own Site Analysis**: Optimization recommendations for your website
+- **Competitor Analysis**: Competitive intelligence and market positioning
 
-### Error Handling
+---
 
-If any module fails, the tool continues scanning other modules and displays appropriate messages without crashing.
+## 🔍 Example Output
 
-### Portability
+### Quick Summary
 
-The project is designed to be easily portable across different Linux systems. Simply install dependencies and run.
+```
+═══════════════════════════════════════════════════════════════
+                    QUICK SUMMARY
+═══════════════════════════════════════════════════════════════
+
+Security Score: 45/100
+SEO Score: 97/100
+Technical SEO Score: 81/100
+On-Page SEO Score: 95/100
+CMS Detected: WordPress
+HTTPS: ✗ Not Enabled
+Articles Found: 12
+Products Found: 10
+Schema.org Validation: 5/7 valid
+```
+
+### Score Grades
+
+| Score | Grade | Emoji |
+|-------|-------|-------|
+| 90-100 | Excellent | 🟢 |
+| 70-89 | Good | 🟡 |
+| 50-69 | Fair | 🟠 |
+| 0-49 | Needs Improvement | 🔴 |
+
+---
 
 ## 🐛 Troubleshooting
 
-### Installation Issues
+### Common Issues
 
-1. **Python3-venv not found**: 
-   ```bash
-   sudo apt-get install python3.10-venv  # Replace 3.10 with your Python version
-   ```
+| Issue | Solution |
+|-------|----------|
+| `python3-venv not found` | `sudo apt install python3.x-venv` |
+| `Permission denied` | `chmod +x install.sh run.sh` |
+| `Module not found` | `pip install -r requirements.txt` |
+| `Gemini 403 error` | API automatically falls back to 2.0 model |
 
-2. **Permission denied**:
-   ```bash
-   chmod +x install.sh
-   chmod +x run.sh
-   ```
+### Debug Mode
 
-3. **Package installation fails**:
-   ```bash
-   ./install.sh --debug  # Run in debug mode to see detailed error messages
-   ```
+```bash
+python3 main.py --debug
+```
 
-### Runtime Issues
+Check logs in `logs/` directory for detailed diagnostics.
 
-1. **Enable debug mode** to see detailed logs:
-   ```bash
-   python3 main.py --debug
-   ```
-
-2. **Check log files** in the `logs/` directory (created in debug mode)
-
-3. **Check installation log**: `install_debug.log` (if you ran installer with --debug)
-
-## 📝 Changelog
-
-### Version 2.0 (Current)
-- ✨ Added enhanced installation script with progress bars
-- ✨ Added internal debug logger with colored output
-- ✨ Added `--debug` command line flag
-- ✨ Added comprehensive error handling and logging
-- ✨ Improved installation process with better error messages
-- ✨ Added automatic dependency detection and installation
-- 🐛 Fixed `builtwith` package version compatibility
-- 🐛 Fixed virtual environment creation issues
-- 📚 Enhanced documentation with troubleshooting section
-
-### Version 1.0
-- Initial release with basic scanning functionality
-
-## � Project Status
-
-This project is actively maintained and welcomes contributions. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+---
 
 ## 🗺️ Roadmap
 
-- [ ] Add support for subdomain enumeration
-- [ ] Implement parallel scanning for multiple URLs
-- [ ] Add export formats (JSON, CSV, HTML)
-- [ ] Create web interface for results visualization
-- [ ] Add Docker support
-- [ ] Implement API endpoint scanning
+- [ ] Subdomain enumeration
+- [ ] Parallel multi-URL scanning
+- [ ] Export to JSON/CSV/HTML
+- [ ] Web dashboard interface
+- [ ] Docker container
+- [ ] API endpoint scanning
+- [ ] Lighthouse integration
+- [ ] Core Web Vitals metrics
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+
+---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+---
 
 ## 📞 Support
 
 - **Issues**: [GitHub Issues](https://github.com/m-alizadeh7/linux-spider-webscaning/issues)
-- **Documentation**: Check the documentation files for detailed information
 - **Discussions**: [GitHub Discussions](https://github.com/m-alizadeh7/linux-spider-webscaning/discussions)
-
-## ⭐ Star History
-
-If you find this project useful, please consider giving it a star! It helps others discover this tool.
-
-## 👨‍💻 Author
-
-Developed with ❤️ for the Linux community
 
 ---
 
-**Note**: Always ensure you have proper authorization before scanning any website. This tool is intended for legitimate security testing and research purposes only.
+## ⭐ Star History
+
+If you find this project useful, please give it a star!
+
+---
+
+**⚠️ Disclaimer**: Always ensure you have proper authorization before scanning any website. This tool is intended for legitimate security testing, SEO analysis, and research purposes only.
+
+---
+
+<p align="center">
+  Developed with ❤️ for the Linux community<br>
+  <strong>Linux Spider v1.5.0</strong>
+</p>

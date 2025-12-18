@@ -1,278 +1,197 @@
-## 🚀 Installation & Quick Start
+# 🚀 Linux Spider v1.5.0 - Quick Start Guide
 
-### Quick Install
+## Quick Installation
+
 ```bash
-git clone https://github.com/YOUR_USERNAME/linux-spider-webscaning.git
+git clone https://github.com/m-alizadeh7/linux-spider-webscaning.git
 cd linux-spider-webscaning
 chmod +x install.sh
 ./install.sh
 ```
 
-### Quick Run
+## Quick Run
+
 ```bash
 ./run.sh
 # or
 source venv/bin/activate && python3 main.py
 ```
 
-### Debug Mode
+## Debug Mode
+
 ```bash
 python3 main.py --debug
 ```
 
 ---
 
-## 📝 Command Reference
+## 📋 Command Reference
 
-### Installation Commands
-```bash
-# Standard installation
-./install.sh
+### Installation
 
-# Debug installation
-./install.sh --debug
+| Command | Description |
+|---------|-------------|
+| `./install.sh` | Standard installation |
+| `./install.sh --debug` | Installation with debug logging |
 
-# Manual installation
-sudo apt-get install python3 python3-pip python3-venv nmap
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
+### Running
 
-### Running the Scanner
-```bash
-# Activate virtual environment
-source venv/bin/activate
+| Command | Description |
+|---------|-------------|
+| `./run.sh` | Quick start |
+| `python3 main.py` | Interactive mode |
+| `python3 main.py --debug` | Debug mode |
+| `python3 main.py --version` | Show version |
+| `python3 main.py --help` | Show help |
 
-# Run interactive mode
-python3 main.py
+---
 
-# Run with debug logging
-python3 main.py --debug
+## 🎯 Scan Modules (v1.5.0)
 
-# Show version
-python3 main.py --version
+| # | Module | Description |
+|---|--------|-------------|
+| 1 | Domain Information | WHOIS, DNS records, expiration |
+| 2 | Hosting & Infrastructure | Server, SSL, headers |
+| 3 | Technology Detection | CMS, frameworks, libraries |
+| 4 | CMS Analysis | WordPress/Joomla deep scan |
+| 5 | Security Scanning | Vulnerabilities, ports |
+| 6 | SEO Analysis | Meta tags, content, links |
+| 7 | **Content & Products** | Articles, products, sitemaps |
 
-# Show help
-python3 main.py --help
+---
 
-# Quick run script
-./run.sh
-```
+## 📊 Report Sections (12 Total)
 
-### Common Workflows
+| # | Section | New in v1.5.0 |
+|---|---------|---------------|
+| 1 | Domain Information | |
+| 2 | Hosting & Infrastructure | |
+| 3 | Technology Stack | |
+| 4 | CMS Analysis | |
+| 5 | Security Analysis | |
+| 6 | SEO Analysis | |
+| 7 | Articles & Content | ✓ NEW |
+| 8 | Products Analysis | ✓ NEW |
+| 9 | Schema.org Validation | ✓ NEW |
+| 10 | Technical SEO | ✓ NEW |
+| 11 | On-Page SEO | ✓ NEW |
+| 12 | Summary & Recommendations | |
 
-#### Full Website Scan
-1. Start the tool: `./run.sh`
-2. Enter target URL (e.g., `https://example.com`)
-3. Select all modules (press Enter for all)
+---
+
+## 🔍 Common Workflows
+
+### Full Website Scan
+
+1. Start: `./run.sh`
+2. Enter target URL (e.g., `example.com`)
+3. Select option `8` (Run All)
 4. Wait for scan completion
 5. Check report in `reports/` directory
 
-#### Security-Focused Scan
+### SEO-Focused Scan
+
 1. Start: `python3 main.py`
 2. Enter URL
-3. Select modules: `4,5` (Security, SEO)
-4. Review security findings in report
+3. Toggle modules: `6`, `7` (SEO + Content)
+4. Select `9` to continue
+5. Review SEO scores and recommendations
 
-#### CMS Analysis
+### Security Audit
+
 1. Start: `python3 main.py`
-2. Enter WordPress site URL
-3. Select module: `4` (CMS Scanner)
-4. Check for plugins and themes
+2. Enter URL
+3. Toggle modules: `5` (Security)
+4. Select `9` to continue
+5. Check security score and vulnerabilities
+
+### E-commerce Analysis
+
+1. Start: `python3 main.py`
+2. Enter store URL
+3. Toggle modules: `4`, `7` (CMS + Content)
+4. Select `9` to continue
+5. View product catalog and schema validation
 
 ---
 
-## 🔍 Module Reference
-
-### 1. Domain Scanner
-**What it does**: Analyzes domain registration and ownership
-- WHOIS information
-- Registration dates
-- Expiration dates
-- Registrar details
-
-**Best for**: Domain research, expiration monitoring
-
-### 2. Host Scanner
-**What it does**: Examines hosting infrastructure
-- DNS records (A, AAAA, MX, NS, TXT, CNAME)
-- IP address resolution
-- Server identification
-- Open ports
-
-**Best for**: Infrastructure analysis, migration planning
-
-### 3. Technology Scanner
-**What it does**: Identifies web technologies
-- Web frameworks
-- Programming languages
-- JavaScript libraries
-- Server software
-
-**Best for**: Technology stack analysis, competitor research
-
-### 4. CMS Scanner
-**What it does**: Detects and analyzes CMS platforms
-- CMS identification (WordPress focus)
-- Version detection
-- Plugin enumeration
-- Theme identification
-
-**Best for**: WordPress sites, plugin audits
-
-### 5. Security Scanner
-**What it does**: Checks security configurations
-- SSL/TLS validation
-- Security headers
-- HTTP security
-- Common vulnerabilities
-
-**Best for**: Security audits, compliance checks
-
-### 6. SEO Scanner
-**What it does**: Analyzes SEO factors
-- Meta tags
-- robots.txt
-- Sitemap
-- Page structure
-
-**Best for**: SEO audits, optimization planning
-
----
-
-## 📂 File Locations
+## 🤖 AI Analysis Setup
 
 ### Configuration
-- No configuration file needed (uses defaults)
 
-### Logs
-- `logs/debug_YYYYMMDD_HHMMSS.log` - Debug logs (when using --debug)
-- `install_debug.log` - Installation logs (when using --debug)
+Create `config/ai_services.txt`:
 
-### Reports
-- `reports/scan_<domain>_<timestamp>.md` - Scan reports
+```
+gemini=YOUR_GEMINI_API_KEY
+openai=YOUR_OPENAI_API_KEY
+openrouter=YOUR_OPENROUTER_API_KEY
+```
 
-### Source Code
-- `scanner/` - Scanner modules
-- `utils/` - Utility functions
-- `main.py` - Main entry point
+### Analysis Types
+
+| Type | Use Case |
+|------|----------|
+| Own Site | Optimization recommendations |
+| Competitor | Market analysis |
 
 ---
 
-## 🐛 Troubleshooting Quick Reference
+## 📈 Score Interpretation
 
-### Installation Issues
-```bash
-# Permission denied
-chmod +x install.sh run.sh
-
-# Python venv not found
-sudo apt-get install python3.10-venv  # Adjust version
-
-# Nmap not found
-sudo apt-get install nmap
-
-# Debug installation issues
-./install.sh --debug
-cat install_debug.log
-```
-
-### Runtime Issues
-```bash
-# Enable debug mode
-python3 main.py --debug
-
-# Check logs
-ls -la logs/
-cat logs/debug_*.log
-
-# Verify virtual environment
-which python3
-pip list
-
-# Reinstall dependencies
-source venv/bin/activate
-pip install -r requirements.txt --upgrade
-```
-
-### Common Errors
-
-**"Module not found"**
-```bash
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-**"Permission denied: nmap"**
-```bash
-# Some nmap features require sudo
-sudo python3 main.py  # Not recommended
-# Or run without port scanning
-```
-
-**"WHOIS lookup failed"**
-- Some domains don't have public WHOIS data
-- Check domain spelling
-- Try again later
-
-**"Connection timeout"**
-- Check internet connection
-- Verify target URL is accessible
-- Target might have rate limiting
+| Score | Grade | Action |
+|-------|-------|--------|
+| 90-100 | 🟢 Excellent | Maintain |
+| 70-89 | 🟡 Good | Minor improvements |
+| 50-69 | 🟠 Fair | Priority fixes needed |
+| 0-49 | 🔴 Poor | Critical issues |
 
 ---
 
-## 💡 Tips & Best Practices
+## 🐛 Troubleshooting
 
-### Performance
-- Run on a server with good bandwidth for faster scans
-- Use debug mode only when troubleshooting
-- Close other network-intensive applications
+| Issue | Solution |
+|-------|----------|
+| `python3-venv not found` | `sudo apt install python3.x-venv` |
+| `Permission denied` | `chmod +x install.sh run.sh` |
+| `Module not found` | `pip install -r requirements.txt` |
+| `Gemini 403` | API auto-fallback to 2.0 model |
 
-### Accuracy
-- Always use full URLs with protocol (https://)
-- Wait for scans to complete (don't interrupt)
-- Some results depend on target's response
+### Debug Logs
 
-### Security
-- Always get permission before scanning
-- Don't scan production sites aggressively
-- Review reports before sharing (may contain sensitive data)
+Check `logs/` directory for:
+- `scanner_YYYYMMDD_HHMMSS.log` - General logs
+- `debug_YYYYMMDD_HHMMSS.log` - Debug mode logs
 
-### Report Management
-```bash
-# View latest report
-ls -t reports/ | head -1
-cat reports/$(ls -t reports/ | head -1)
+---
 
-# Clean old reports
-find reports/ -name "*.md" -mtime +30 -delete
+## 📁 Output Files
 
-# Archive reports
-tar -czf reports_backup.tar.gz reports/
+### Reports Location
+
+```
+reports/scan_<domain>_<timestamp>.md
+reports/ai_analysis_<domain>_<type>_<timestamp>.md
+```
+
+### Example Report Names
+
+```
+scan_example.com_20251219_143022.md
+ai_analysis_example.com_own_20251219_143522.md
 ```
 
 ---
 
-## 🔗 Quick Links
+## 🔗 Useful Links
 
-- [Full Documentation](README.md)
-- [Contributing Guide](CONTRIBUTING.md)
-- [Security Policy](SECURITY.md)
-- [Changelog](CHANGELOG.md)
-- [Logger Documentation](LOGGER.md)
-
----
-
-## 📞 Getting Help
-
-1. **Check documentation**: README.md
-2. **Enable debug mode**: `python3 main.py --debug`
-3. **Check logs**: `logs/debug_*.log`
-4. **Search issues**: GitHub Issues
-5. **Ask for help**: Open a new issue with debug logs
+- [README.md](README.md) - Full documentation
+- [CHANGELOG.md](CHANGELOG.md) - Version history
+- [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guide
+- [LICENSE](LICENSE) - MIT License
 
 ---
 
-**Last Updated**: December 2025
+<p align="center">
+  <strong>Linux Spider v1.5.0</strong><br>
+  Advanced Web Intelligence Platform
+</p>

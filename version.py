@@ -2,19 +2,19 @@
 Version information for Linux Spider Web Scanner
 """
 
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 __author__ = "Linux Spider Contributors"
 __license__ = "MIT"
 __copyright__ = "Copyright 2025 Linux Spider Contributors"
 __url__ = "https://github.com/m-alizadeh7/linux-spider-webscaning"
-__description__ = "A comprehensive web scanning tool for Linux systems"
+__description__ = "A comprehensive web scanning and SEO analysis tool for Linux systems"
 
 VERSION_INFO = {
     "major": 1,
-    "minor": 4,
+    "minor": 5,
     "patch": 0,
     "release": "stable",
-    "build": "20251217"
+    "build": "20251219"
 }
 
 def get_version():
