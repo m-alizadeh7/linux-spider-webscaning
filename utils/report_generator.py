@@ -72,6 +72,26 @@ class ReportGenerator:
             if 'seo' in scan_results:
                 f.write(self._generate_seo_section(scan_results['seo']))
             
+            # Content & Articles Analysis (NEW)
+            if 'articles' in scan_results or 'content' in scan_results:
+                f.write(self._generate_articles_section(scan_results))
+            
+            # Products Analysis (NEW)
+            if 'products' in scan_results:
+                f.write(self._generate_products_section(scan_results['products']))
+            
+            # Schema Validation (NEW)
+            if 'schema_validation' in scan_results:
+                f.write(self._generate_schema_section(scan_results['schema_validation']))
+            
+            # Technical SEO (NEW)
+            if 'technical_seo' in scan_results:
+                f.write(self._generate_technical_seo_section(scan_results['technical_seo']))
+            
+            # On-Page SEO (NEW)
+            if 'onpage_seo' in scan_results:
+                f.write(self._generate_onpage_seo_section(scan_results['onpage_seo']))
+            
             # Summary and Recommendations
             f.write(self._generate_summary(scan_results))
             
@@ -100,9 +120,12 @@ class ReportGenerator:
     
     def _generate_domain_section(self, domain_data: Dict[str, Any]) -> str:
         """Generate domain information section"""
-        whois = domain_data.get('whois', {})
-        dns = domain_data.get('dns', {})
-        ips = domain_data.get('ip_addresses', [])
+        if not domain_data:
+            return "## 1. Domain Information\n\n*Domain information not available*\n\n---\n\n"
+        
+        whois = domain_data.get('whois', {}) or {}
+        dns = domain_data.get('dns', {}) or {}
+        ips = domain_data.get('ip_addresses', []) or []
         
         section = """## 1. Domain Information
 
@@ -140,9 +163,12 @@ class ReportGenerator:
     
     def _generate_host_section(self, host_data: Dict[str, Any]) -> str:
         """Generate hosting information section"""
-        server_info = host_data.get('server_info', {})
-        ssl_info = host_data.get('ssl_info', {})
-        response_info = host_data.get('response_info', {})
+        if not host_data:
+            return "## 2. Hosting & Infrastructure\n\n*Hosting information not available*\n\n---\n\n"
+        
+        server_info = host_data.get('server_info', {}) or {}
+        ssl_info = host_data.get('ssl_info', {}) or {}
+        response_info = host_data.get('response_info', {}) or {}
         
         section = """## 2. Hosting & Infrastructure
 
@@ -191,9 +217,12 @@ class ReportGenerator:
     
     def _generate_technology_section(self, tech_data: Dict[str, Any]) -> str:
         """Generate technology detection section"""
-        manual = tech_data.get('manual_detection', {})
-        js_libs = tech_data.get('javascript_libraries', [])
-        generators = tech_data.get('meta_generators', [])
+        if not tech_data:
+            return "## 3. Technology Stack\n\n*Technology information not available*\n\n---\n\n"
+        
+        manual = tech_data.get('manual_detection', {}) or {}
+        js_libs = tech_data.get('javascript_libraries', []) or []
+        generators = tech_data.get('meta_generators', []) or []
         
         section = """## 3. Technology Stack
 
@@ -255,6 +284,9 @@ class ReportGenerator:
     
     def _generate_cms_section(self, cms_data: Dict[str, Any]) -> str:
         """Generate CMS analysis section"""
+        if not cms_data:
+            return "## 4. CMS Analysis\n\n*CMS information not available*\n\n---\n\n"
+        
         cms_type = cms_data.get('cms_detected', 'Unknown')
         
         section = f"""## 4. CMS Analysis
@@ -349,12 +381,15 @@ class ReportGenerator:
     
     def _generate_security_section(self, security_data: Dict[str, Any]) -> str:
         """Generate security analysis section"""
+        if not security_data:
+            return "## 5. Security Analysis\n\n*Security information not available*\n\n---\n\n"
+        
         score = security_data.get('security_score', 0)
-        headers = security_data.get('security_headers', {})
-        ssl = security_data.get('ssl_analysis', {})
-        common_files = security_data.get('common_files', {})
-        info_disclosure = security_data.get('information_disclosure', {})
-        ports = security_data.get('port_scan', {})
+        headers = security_data.get('security_headers', {}) or {}
+        ssl = security_data.get('ssl_analysis', {}) or {}
+        common_files = security_data.get('common_files', {}) or {}
+        info_disclosure = security_data.get('information_disclosure', {}) or {}
+        ports = security_data.get('port_scan', {}) or {}
         
         # Determine security level
         if score >= 80:
@@ -429,14 +464,17 @@ class ReportGenerator:
     
     def _generate_seo_section(self, seo_data: Dict[str, Any]) -> str:
         """Generate SEO analysis section"""
+        if not seo_data:
+            return "## 6. SEO Analysis\n\n*SEO information not available*\n\n---\n\n"
+        
         score = seo_data.get('seo_score', 0)
-        meta = seo_data.get('meta_tags', {})
-        headings = seo_data.get('headings', {})
-        content = seo_data.get('content_analysis', {})
-        links = seo_data.get('links', {})
-        images = seo_data.get('images', {})
-        mobile = seo_data.get('mobile_friendly', {})
-        performance = seo_data.get('performance', {})
+        meta = seo_data.get('meta_tags', {}) or {}
+        headings = seo_data.get('headings', {}) or {}
+        content = seo_data.get('content_analysis', {}) or {}
+        links = seo_data.get('links', {}) or {}
+        images = seo_data.get('images', {}) or {}
+        mobile = seo_data.get('mobile_friendly', {}) or {}
+        performance = seo_data.get('performance', {}) or {}
         
         # Determine SEO level
         if score >= 80:
@@ -530,7 +568,7 @@ class ReportGenerator:
     
     def _generate_summary(self, scan_results: Dict[str, Any]) -> str:
         """Generate summary and recommendations"""
-        section = """## 7. Summary & Recommendations
+        section = """## 12. Summary & Recommendations
 
 ### Overall Assessment
 
@@ -540,11 +578,26 @@ class ReportGenerator:
         security_score = scan_results.get('security', {}).get('security_score', 0)
         seo_score = scan_results.get('seo', {}).get('seo_score', 0)
         
+        # Also include new scores if available
+        tech_seo_score = scan_results.get('technical_seo', {}).get('score', 0)
+        onpage_seo_score = scan_results.get('onpage_seo', {}).get('score', 0)
+        
         section += f"- **Security Score:** {security_score}/100\n"
         section += f"- **SEO Score:** {seo_score}/100\n"
         
+        if tech_seo_score:
+            section += f"- **Technical SEO Score:** {tech_seo_score}/100\n"
+        if onpage_seo_score:
+            section += f"- **On-Page SEO Score:** {onpage_seo_score}/100\n"
+        
         # Overall grade
-        avg_score = (security_score + seo_score) / 2
+        scores = [security_score, seo_score]
+        if tech_seo_score:
+            scores.append(tech_seo_score)
+        if onpage_seo_score:
+            scores.append(onpage_seo_score)
+        
+        avg_score = sum(scores) / len(scores) if scores else 0
         if avg_score >= 80:
             grade = "A - Excellent"
         elif avg_score >= 70:
@@ -606,3 +659,321 @@ For comprehensive security audits or detailed SEO analysis, consider consulting 
 
 *Report End*
 """
+
+    def _generate_articles_section(self, scan_results: Dict[str, Any]) -> str:
+        """Generate articles analysis section"""
+        section = "## 7. Articles & Content Analysis\n\n"
+        
+        articles_data = scan_results.get('articles', {}) or {}
+        content_data = scan_results.get('content', {}) or {}
+        
+        # Discovery info
+        discovery = content_data.get('discovery', {}) or {}
+        if discovery:
+            section += "### Content Discovery\n\n"
+            
+            sitemap_urls = discovery.get('sitemap_urls', [])
+            rss_feeds = discovery.get('rss_feeds', [])
+            
+            section += f"- **Sitemap URLs Found:** {len(sitemap_urls)}\n"
+            section += f"- **RSS/Atom Feeds Found:** {len(rss_feeds)}\n"
+            
+            if rss_feeds:
+                section += "\n**RSS Feeds:**\n"
+                for feed in rss_feeds[:5]:
+                    title = feed.get('title', 'Untitled')
+                    url = feed.get('url', '')
+                    section += f"- {title}: `{url}`\n"
+            
+            section += "\n"
+        
+        # Articles list
+        articles_list = articles_data.get('articles', [])
+        total_articles = articles_data.get('total_found', len(articles_list))
+        
+        section += "### Articles Found\n\n"
+        section += f"- **Total Articles Detected:** {total_articles}\n"
+        
+        if articles_list:
+            section += "\n**Recent Articles:**\n\n"
+            section += "| # | Title | Date | Author |\n"
+            section += "|---|-------|------|--------|\n"
+            
+            for i, article in enumerate(articles_list[:20], 1):
+                title = str(article.get('title', 'Untitled') or 'Untitled')[:50]
+                date = article.get('date_published', 'N/A')
+                if date and len(str(date)) > 10:
+                    date = str(date)[:10]
+                author = str(article.get('author', 'Unknown') or 'Unknown')[:20]
+                section += f"| {i} | {title} | {date} | {author} |\n"
+            
+            if len(articles_list) > 20:
+                section += f"\n*... and {len(articles_list) - 20} more articles*\n"
+        else:
+            section += "\n*No articles detected on this website*\n"
+        
+        section += "\n---\n\n"
+        return section
+    
+    def _generate_products_section(self, products_data: Dict[str, Any]) -> str:
+        """Generate products analysis section"""
+        section = "## 8. Products Analysis (E-commerce)\n\n"
+        
+        if not products_data:
+            section += "*Product information not available*\n\n---\n\n"
+            return section
+        
+        products_list = products_data.get('products', []) or []
+        total_products = products_data.get('total_found', len(products_list))
+        
+        section += f"- **Total Products Detected:** {total_products}\n"
+        section += f"- **E-commerce Detected:** {'✓ Yes' if total_products > 0 else '✗ No'}\n\n"
+        
+        if products_list:
+            section += "### Product Catalog Sample\n\n"
+            section += "| # | Product Name | Price | Availability |\n"
+            section += "|---|--------------|-------|-------------|\n"
+            
+            for i, product in enumerate(products_list[:20], 1):
+                name = str(product.get('name', 'Untitled') or 'Untitled')[:40]
+                price = product.get('price', 'N/A')
+                if isinstance(price, dict):
+                    price = f"{price.get('value', 'N/A')} {price.get('currency', '')}"
+                elif price is None:
+                    price = 'N/A'
+                availability = product.get('availability', 'Unknown') or 'Unknown'
+                if 'InStock' in str(availability):
+                    availability = '✓ In Stock'
+                elif 'OutOfStock' in str(availability):
+                    availability = '✗ Out of Stock'
+                section += f"| {i} | {name} | {price} | {availability} |\n"
+            
+            if len(products_list) > 20:
+                section += f"\n*... and {len(products_list) - 20} more products*\n"
+        else:
+            section += "*No products detected - this may not be an e-commerce website*\n"
+        
+        section += "\n---\n\n"
+        return section
+    
+    def _generate_schema_section(self, schema_data: Dict[str, Any]) -> str:
+        """Generate schema validation section"""
+        section = "## 9. Schema.org Structured Data\n\n"
+        
+        if not schema_data:
+            section += "*Schema information not available*\n\n---\n\n"
+            return section
+        
+        schemas = schema_data.get('schemas', []) or []
+        valid_count = schema_data.get('valid_schemas', 0)
+        total_count = schema_data.get('total_schemas', len(schemas))
+        
+        if total_count > 0:
+            validity_pct = (valid_count / total_count) * 100
+            status = "✓ Good" if validity_pct >= 80 else "⚠️ Needs Improvement" if validity_pct >= 50 else "✗ Poor"
+            section += f"### Schema Validation: {status}\n\n"
+            section += f"- **Total Schemas Found:** {total_count}\n"
+            section += f"- **Valid Schemas:** {valid_count}\n"
+            section += f"- **Validity Rate:** {validity_pct:.1f}%\n\n"
+            
+            section += "### Detected Schema Types\n\n"
+            section += "| Schema Type | Valid | Issues |\n"
+            section += "|-------------|-------|--------|\n"
+            
+            for schema in schemas[:15]:
+                schema_type = schema.get('type', 'Unknown')
+                is_valid = "✓" if schema.get('is_valid', False) else "✗"
+                errors = schema.get('errors', [])
+                issues = ', '.join(errors[:2]) if errors else 'None'
+                section += f"| {schema_type} | {is_valid} | {issues[:50]} |\n"
+        else:
+            section += "### ⚠️ No Schema.org Markup Found\n\n"
+            section += "**Recommendation:** Implement structured data for better SEO:\n\n"
+            section += "- Add `Organization` schema for brand identity\n"
+            section += "- Add `WebSite` schema with SearchAction\n"
+            section += "- Add `Article` schema for blog posts\n"
+            section += "- Add `Product` schema for e-commerce\n"
+            section += "- Add `BreadcrumbList` for navigation\n"
+        
+        section += "\n---\n\n"
+        return section
+    
+    def _generate_technical_seo_section(self, tech_seo: Dict[str, Any]) -> str:
+        """Generate technical SEO section"""
+        section = "## 10. Technical SEO Analysis\n\n"
+        
+        if not tech_seo:
+            section += "*Technical SEO information not available*\n\n---\n\n"
+            return section
+        
+        score = tech_seo.get('score', tech_seo.get('overall_score', 0))
+        grade = self._get_score_grade(score)
+        section += f"### Technical SEO Score: {score}/100 - {grade}\n\n"
+        
+        section += "| Check | Status | Details |\n"
+        section += "|-------|--------|--------|\n"
+        
+        # Direct field mapping from TechnicalSEOResult.to_dict()
+        https_status = tech_seo.get('is_https', False)
+        section += f"| HTTPS Enabled | {'✓' if https_status else '✗'} | {'Secure connection' if https_status else 'Not using HTTPS'} |\n"
+        
+        canonical = tech_seo.get('canonical_url', None)
+        canonical_matches = tech_seo.get('canonical_matches', False)
+        section += f"| Canonical Tag | {'✓' if canonical else '✗'} | {str(canonical)[:40] if canonical else 'Not set'}{'...' if canonical and len(str(canonical)) > 40 else ''} |\n"
+        
+        robots_txt = tech_seo.get('robots_txt_exists', False)
+        section += f"| robots.txt | {'✓' if robots_txt else '✗'} | {'Found' if robots_txt else 'Not found'} |\n"
+        
+        sitemap = tech_seo.get('sitemap_exists', False)
+        sitemap_in_robots = tech_seo.get('sitemap_in_robots', False)
+        section += f"| XML Sitemap | {'✓' if sitemap else '✗'} | {'Found' + (' (in robots.txt)' if sitemap_in_robots else '') if sitemap else 'Not found'} |\n"
+        
+        mobile_viewport = tech_seo.get('mobile_viewport', False)
+        section += f"| Mobile Friendly | {'✓' if mobile_viewport else '✗'} | {'Viewport meta tag present' if mobile_viewport else 'No viewport meta tag'} |\n"
+        
+        ttfb = tech_seo.get('ttfb_ms', 0)
+        load_time = tech_seo.get('load_time_ms', 0)
+        ttfb_ok = ttfb < 600 if ttfb else False
+        section += f"| Page Speed | {'✓' if ttfb_ok else '✗'} | TTFB: {ttfb}ms, Load: {load_time}ms |\n"
+        
+        is_indexable = tech_seo.get('is_indexable', True)
+        section += f"| Indexability | {'✓' if is_indexable else '✗'} | {'Indexable' if is_indexable else 'Blocked from indexing'} |\n"
+        
+        # Issues
+        issues = tech_seo.get('issues', []) or []
+        if issues:
+            section += "\n### Issues Found\n\n"
+            for issue in issues[:10]:
+                if isinstance(issue, dict):
+                    section += f"- **{issue.get('issue', 'Unknown')}** ({issue.get('impact', 'N/A')}): {issue.get('fix', '')}\n"
+                else:
+                    section += f"- {issue}\n"
+        
+        # Warnings
+        warnings = tech_seo.get('warnings', []) or []
+        if warnings:
+            section += "\n### Warnings\n\n"
+            for warning in warnings[:10]:
+                if isinstance(warning, dict):
+                    section += f"- {warning.get('issue', warning)}\n"
+                else:
+                    section += f"- {warning}\n"
+        
+        # Passed checks
+        passed = tech_seo.get('passed', []) or []
+        if passed:
+            section += "\n### Passed Checks\n\n"
+            for p in passed[:10]:
+                section += f"- ✓ {p}\n"
+        
+        section += "\n---\n\n"
+        return section
+    
+    def _generate_onpage_seo_section(self, onpage_seo: Dict[str, Any]) -> str:
+        """Generate on-page SEO section"""
+        section = "## 11. On-Page SEO Analysis\n\n"
+        
+        if not onpage_seo:
+            section += "*On-page SEO information not available*\n\n---\n\n"
+            return section
+        
+        score = onpage_seo.get('score', onpage_seo.get('overall_score', 0))
+        grade = self._get_score_grade(score)
+        section += f"### On-Page SEO Score: {score}/100 - {grade}\n\n"
+        
+        # Title analysis - directly from onpage_seo dict
+        title = onpage_seo.get('title', {}) or {}
+        section += "### Title Tag\n\n"
+        title_content = title.get('content', 'Not set') or 'Not set'
+        section += f"- **Content:** {title_content[:80]}{'...' if len(str(title_content)) > 80 else ''}\n"
+        section += f"- **Length:** {title.get('length', len(str(title_content)) if title_content != 'Not set' else 0)} characters\n"
+        section += f"- **Status:** {'✓ Optimal' if title.get('optimal', False) else '⚠️ Needs optimization'}\n\n"
+        
+        # Meta description - directly from onpage_seo dict
+        meta_desc = onpage_seo.get('meta_description', {}) or {}
+        section += "### Meta Description\n\n"
+        desc_content = meta_desc.get('content', 'Not set') or 'Not set'
+        section += f"- **Content:** {str(desc_content)[:100]}{'...' if len(str(desc_content)) > 100 else ''}\n"
+        section += f"- **Length:** {meta_desc.get('length', 0)} characters\n"
+        section += f"- **Status:** {'✓ Optimal' if meta_desc.get('optimal', False) else '⚠️ Needs optimization'}\n\n"
+        
+        # Headings - directly from onpage_seo dict
+        headings = onpage_seo.get('headings', {}) or {}
+        section += "### Heading Structure\n\n"
+        section += f"- **H1 Tags:** {headings.get('h1_count', 0)}\n"
+        h1_content = headings.get('h1_content', [])
+        if h1_content:
+            section += f"- **H1 Content:** {', '.join(str(h)[:50] for h in h1_content[:3])}\n"
+        section += f"- **H2 Tags:** {headings.get('h2_count', 0)}\n"
+        section += f"- **H3 Tags:** {headings.get('h3_count', 0)}\n"
+        hierarchy_valid = headings.get('hierarchy_valid', headings.get('optimal', False))
+        section += f"- **Status:** {'✓ Good hierarchy' if hierarchy_valid else '⚠️ Review heading hierarchy'}\n\n"
+        
+        # Content quality - directly from onpage_seo dict
+        content = onpage_seo.get('content', {}) or {}
+        section += "### Content Quality\n\n"
+        word_count = content.get('word_count', 0)
+        section += f"- **Word Count:** {word_count}\n"
+        section += f"- **Paragraphs:** {content.get('paragraph_count', 0)}\n"
+        is_thin = content.get('is_thin_content', word_count < 300 if word_count else True)
+        section += f"- **Content Status:** {'⚠️ Thin content (< 300 words)' if is_thin else '✓ Adequate content'}\n\n"
+        
+        # Links - directly from onpage_seo dict
+        links = onpage_seo.get('links', {}) or {}
+        section += "### Link Analysis\n\n"
+        section += f"- **Internal Links:** {links.get('internal', 0)}\n"
+        section += f"- **External Links:** {links.get('external', 0)}\n"
+        section += f"- **Nofollow Links:** {links.get('nofollow', 0)}\n\n"
+        
+        # Images - directly from onpage_seo dict
+        images = onpage_seo.get('images', {}) or {}
+        section += "### Image Optimization\n\n"
+        section += f"- **Total Images:** {images.get('total', 0)}\n"
+        section += f"- **With Alt Text:** {images.get('with_alt', 0)}\n"
+        section += f"- **Missing Alt Text:** {images.get('missing_alt', 0)}\n"
+        alt_coverage = images.get('alt_coverage_percent', 0)
+        if isinstance(alt_coverage, (int, float)):
+            section += f"- **Alt Coverage:** {alt_coverage:.1f}%\n\n"
+        else:
+            section += f"- **Alt Coverage:** N/A\n\n"
+        
+        # Issues
+        issues = onpage_seo.get('issues', []) or []
+        if issues:
+            section += "### Issues Found\n\n"
+            for issue in issues[:10]:
+                if isinstance(issue, dict):
+                    section += f"- **{issue.get('issue', 'Unknown')}** ({issue.get('impact', 'N/A')}): {issue.get('fix', '')}\n"
+                else:
+                    section += f"- {issue}\n"
+        
+        # Warnings
+        warnings = onpage_seo.get('warnings', []) or []
+        if warnings:
+            section += "\n### Warnings\n\n"
+            for warning in warnings[:10]:
+                if isinstance(warning, dict):
+                    section += f"- {warning.get('issue', warning)}\n"
+                else:
+                    section += f"- {warning}\n"
+        
+        # Passed checks
+        passed = onpage_seo.get('passed', []) or []
+        if passed:
+            section += "\n### Passed Checks\n\n"
+            for p in passed[:10]:
+                section += f"- ✓ {p}\n"
+        
+        section += "\n---\n\n"
+        return section
+    
+    def _get_score_grade(self, score: int) -> str:
+        """Get grade emoji based on score"""
+        if score >= 90:
+            return "🟢 Excellent"
+        elif score >= 70:
+            return "🟡 Good"
+        elif score >= 50:
+            return "🟠 Fair"
+        else:
+            return "🔴 Needs Improvement"

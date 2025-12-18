@@ -286,7 +286,11 @@ class WebScanner:
             
             return report_path
         except Exception as e:
+            import traceback
             print(f"{Fore.RED}✗ Report generation failed: {e}{Style.RESET_ALL}")
+            if self.debug_mode:
+                traceback.print_exc()
+            self.logger.exception(f"Report generation error: {e}")
             return None
     
     def run_ai_analysis(self, report_path: str):

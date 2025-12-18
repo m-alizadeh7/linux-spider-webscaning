@@ -60,28 +60,53 @@ def _call_openrouter(api_key: str, model: str, prompt: str, temperature: float =
 def _call_gemini(api_key: str, model: str, prompt: str, temperature: float = 0.2) -> str:
     # Default to latest flash model if generic name given
     if model in ["gemini-v1", "gemini", "gemini-1.5-flash", ""]:
-        model = "gemini-2.5-flash"
+        model = "gemini-2.0-flash"
     
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-    headers = {"Content-Type": "application/json"}
-    params = {"key": api_key}
-    data = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {
-            "temperature": temperature,
-            "maxOutputTokens": 8192
-        }
-    }
-    resp = requests.post(url, headers=headers, params=params, json=data, timeout=180)
-    resp.raise_for_status()
-    j = resp.json()
+    # Try multiple API versions
+    api_versions = ["v1beta", "v1"]
+    last_error = None
     
-    if "candidates" in j and isinstance(j["candidates"], list):
-        candidate = j["candidates"][0]
-        if "content" in candidate and "parts" in candidate["content"]:
-            parts = candidate["content"]["parts"]
-            return "".join(p.get("text", "") for p in parts).strip()
-    return json.dumps(j)
+    for version in api_versions:
+        try:
+            url = f"https://generativelanguage.googleapis.com/{version}/models/{model}:generateContent"
+            headers = {"Content-Type": "application/json"}
+            params = {"key": api_key}
+            data = {
+                "contents": [{"parts": [{"text": prompt}]}],
+                "generationConfig": {
+                    "temperature": temperature,
+                    "maxOutputTokens": 8192
+                }
+            }
+            resp = requests.post(url, headers=headers, params=params, json=data, timeout=180)
+            
+            if resp.status_code == 403:
+                # Try alternative model
+                if "2.5" in model:
+                    alt_model = model.replace("2.5", "2.0")
+                    url = f"https://generativelanguage.googleapis.com/{version}/models/{alt_model}:generateContent"
+                    resp = requests.post(url, headers=headers, params=params, json=data, timeout=180)
+            
+            resp.raise_for_status()
+            j = resp.json()
+            
+            if "candidates" in j and isinstance(j["candidates"], list):
+                candidate = j["candidates"][0]
+                if "content" in candidate and "parts" in candidate["content"]:
+                    parts = candidate["content"]["parts"]
+                    return "".join(p.get("text", "") for p in parts).strip()
+            return json.dumps(j)
+            
+        except requests.exceptions.HTTPError as e:
+            last_error = e
+            continue
+        except Exception as e:
+            last_error = e
+            continue
+    
+    if last_error:
+        raise last_error
+    return ""
 
 
 def call_provider(kind: str, api_key: str, model: str, prompt: str, temperature: float = 0.2) -> str:
