@@ -9,3 +9,9 @@ python-nmap>=0.7.1
 validators>=0.22.0
 lxml>=4.9.3
 pyOpenSSL>=23.3.0
+
+# New dependencies for SEO, Content & Products features
+extruct>=0.16.0
+feedparser>=6.0.10
+tldextract>=5.1.0
+PyYAML>=6.0.1

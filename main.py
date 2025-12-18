@@ -14,9 +14,11 @@ from colorama import init, Fore, Style
 from version import __version__, __description__
 from utils.helpers import normalize_url, extract_domain
 from utils.report_generator import ReportGenerator
+from utils.enhanced_report import EnhancedReportGenerator
 from utils.logger import get_logger, set_debug_mode
 from utils.ai_reporter import generate_ai_report_from_text, save_aggregated_report
 from scanner.discovery_scanner import DiscoveryScanner
+from scanner.content_scanner import ContentScanner
 from scanner.domain_scanner import DomainScanner
 from scanner.host_scanner import HostScanner
 from scanner.tech_scanner import TechnologyScanner
@@ -130,24 +132,25 @@ class WebScanner:
             '3': {'name': 'Technology Detection', 'key': 'tech', 'selected': True},
             '4': {'name': 'CMS Analysis', 'key': 'cms', 'selected': True},
             '5': {'name': 'Security Scanning', 'key': 'security', 'selected': True},
-            '6': {'name': 'SEO Analysis', 'key': 'seo', 'selected': True}
+            '6': {'name': 'SEO Analysis', 'key': 'seo', 'selected': True},
+            '7': {'name': 'Content & Products (NEW)', 'key': 'content', 'selected': True}
         }
         
         for key, module in modules.items():
             status = f"{Fore.GREEN}[✓]{Style.RESET_ALL}" if module['selected'] else f"{Fore.RED}[ ]{Style.RESET_ALL}"
             print(f"{status} {key}. {module['name']}")
         
-        print(f"\n{Fore.CYAN}7. Run All (Default)")
-        print(f"8. Continue with selection{Style.RESET_ALL}")
+        print(f"\n{Fore.CYAN}8. Run All (Default)")
+        print(f"9. Continue with selection{Style.RESET_ALL}")
         
         while True:
-            choice = input(f"\n{Fore.GREEN}Select option (1-8) or press Enter to run all: {Style.RESET_ALL}").strip()
+            choice = input(f"\n{Fore.GREEN}Select option (1-9) or press Enter to run all: {Style.RESET_ALL}").strip()
             
-            if not choice or choice == '7':
+            if not choice or choice == '8':
                 # Run all modules
                 return {module['key']: True for module in modules.values()}
             
-            elif choice == '8':
+            elif choice == '9':
                 # Continue with current selection
                 return {module['key']: module['selected'] for module in modules.values()}
             
@@ -169,10 +172,14 @@ class WebScanner:
         print(f"{Fore.WHITE}Target: {self.url}{Style.RESET_ALL}")
         print(f"{Fore.WHITE}Domain: {self.domain}{Style.RESET_ALL}\n")
         
+        total_modules = sum(1 for v in selected_modules.values() if v)
+        current = 0
+        
         # Domain Scanner
         if selected_modules.get('domain', False):
+            current += 1
             try:
-                print(f"{Fore.CYAN}[1/6] Domain Information{Style.RESET_ALL}")
+                print(f"{Fore.CYAN}[{current}/{total_modules}] Domain Information{Style.RESET_ALL}")
                 domain_scanner = DomainScanner()
                 self.scan_results['domain'] = domain_scanner.scan(self.domain)
                 print(f"{Fore.GREEN}✓ Domain scan completed{Style.RESET_ALL}\n")
@@ -182,8 +189,9 @@ class WebScanner:
         
         # Host Scanner
         if selected_modules.get('host', False):
+            current += 1
             try:
-                print(f"{Fore.CYAN}[2/6] Hosting & Infrastructure{Style.RESET_ALL}")
+                print(f"{Fore.CYAN}[{current}/{total_modules}] Hosting & Infrastructure{Style.RESET_ALL}")
                 host_scanner = HostScanner()
                 self.scan_results['host'] = host_scanner.scan(self.url, self.domain)
                 print(f"{Fore.GREEN}✓ Host scan completed{Style.RESET_ALL}\n")
@@ -193,8 +201,9 @@ class WebScanner:
         
         # Technology Scanner
         if selected_modules.get('tech', False):
+            current += 1
             try:
-                print(f"{Fore.CYAN}[3/6] Technology Detection{Style.RESET_ALL}")
+                print(f"{Fore.CYAN}[{current}/{total_modules}] Technology Detection{Style.RESET_ALL}")
                 tech_scanner = TechnologyScanner()
                 self.scan_results['technology'] = tech_scanner.scan(self.url)
                 print(f"{Fore.GREEN}✓ Technology scan completed{Style.RESET_ALL}\n")
@@ -204,8 +213,9 @@ class WebScanner:
         
         # CMS Scanner
         if selected_modules.get('cms', False):
+            current += 1
             try:
-                print(f"{Fore.CYAN}[4/6] CMS Analysis{Style.RESET_ALL}")
+                print(f"{Fore.CYAN}[{current}/{total_modules}] CMS Analysis{Style.RESET_ALL}")
                 cms_scanner = CMSScanner()
                 self.scan_results['cms'] = cms_scanner.scan(self.url)
                 print(f"{Fore.GREEN}✓ CMS scan completed{Style.RESET_ALL}\n")
@@ -215,8 +225,9 @@ class WebScanner:
         
         # Security Scanner
         if selected_modules.get('security', False):
+            current += 1
             try:
-                print(f"{Fore.CYAN}[5/6] Security Analysis{Style.RESET_ALL}")
+                print(f"{Fore.CYAN}[{current}/{total_modules}] Security Analysis{Style.RESET_ALL}")
                 security_scanner = SecurityScanner()
                 self.scan_results['security'] = security_scanner.scan(self.url)
                 print(f"{Fore.GREEN}✓ Security scan completed{Style.RESET_ALL}\n")
@@ -226,14 +237,33 @@ class WebScanner:
         
         # SEO Scanner
         if selected_modules.get('seo', False):
+            current += 1
             try:
-                print(f"{Fore.CYAN}[6/6] SEO Analysis{Style.RESET_ALL}")
+                print(f"{Fore.CYAN}[{current}/{total_modules}] SEO Analysis{Style.RESET_ALL}")
                 seo_scanner = SEOScanner()
                 self.scan_results['seo'] = seo_scanner.scan(self.url)
                 print(f"{Fore.GREEN}✓ SEO scan completed{Style.RESET_ALL}\n")
             except Exception as e:
                 print(f"{Fore.RED}✗ SEO scan failed: {e}{Style.RESET_ALL}\n")
                 self.scan_results['seo'] = {'error': str(e)}
+        
+        # Content & Products Scanner (NEW)
+        if selected_modules.get('content', False):
+            current += 1
+            try:
+                print(f"{Fore.CYAN}[{current}/{total_modules}] Content & Products Analysis{Style.RESET_ALL}")
+                content_scanner = ContentScanner()
+                content_results = content_scanner.scan(self.url)
+                self.scan_results['content'] = content_results
+                self.scan_results['articles'] = content_results.get('articles', {})
+                self.scan_results['products'] = content_results.get('products', {})
+                self.scan_results['schema_validation'] = content_results.get('schema_validation', {})
+                self.scan_results['technical_seo'] = content_results.get('technical_seo', {})
+                self.scan_results['onpage_seo'] = content_results.get('onpage_seo', {})
+                print(f"{Fore.GREEN}✓ Content & Products scan completed{Style.RESET_ALL}\n")
+            except Exception as e:
+                print(f"{Fore.RED}✗ Content scan failed: {e}{Style.RESET_ALL}\n")
+                self.scan_results['content'] = {'error': str(e)}
         
         print(f"{Fore.GREEN}═══════════════════════════════════════════════════════════════")
         print(f"                  SCAN COMPLETED")
@@ -337,6 +367,18 @@ class WebScanner:
             seo_score = self.scan_results['seo'].get('seo_score', 0)
             print(f"{Fore.WHITE}SEO Score: {Fore.YELLOW}{seo_score}/100{Style.RESET_ALL}")
         
+        # Technical SEO Score (NEW)
+        if 'technical_seo' in self.scan_results:
+            tech_seo = self.scan_results['technical_seo']
+            tech_score = tech_seo.get('overall_score', 0)
+            print(f"{Fore.WHITE}Technical SEO Score: {Fore.YELLOW}{tech_score}/100{Style.RESET_ALL}")
+        
+        # On-Page SEO Score (NEW)
+        if 'onpage_seo' in self.scan_results:
+            onpage_seo = self.scan_results['onpage_seo']
+            onpage_score = onpage_seo.get('overall_score', 0)
+            print(f"{Fore.WHITE}On-Page SEO Score: {Fore.YELLOW}{onpage_score}/100{Style.RESET_ALL}")
+        
         # CMS Detection
         if 'cms' in self.scan_results:
             cms_type = self.scan_results['cms'].get('cms_detected', 'Unknown')
@@ -348,6 +390,27 @@ class WebScanner:
             https_status = "✓ Enabled" if ssl_info.get('enabled') else "✗ Not Enabled"
             color = Fore.GREEN if ssl_info.get('enabled') else Fore.RED
             print(f"{Fore.WHITE}HTTPS: {color}{https_status}{Style.RESET_ALL}")
+        
+        # Articles Found (NEW)
+        if 'articles' in self.scan_results:
+            articles = self.scan_results['articles']
+            article_count = articles.get('total_found', 0)
+            print(f"{Fore.WHITE}Articles Found: {Fore.YELLOW}{article_count}{Style.RESET_ALL}")
+        
+        # Products Found (NEW)
+        if 'products' in self.scan_results:
+            products = self.scan_results['products']
+            product_count = products.get('total_found', 0)
+            print(f"{Fore.WHITE}Products Found: {Fore.YELLOW}{product_count}{Style.RESET_ALL}")
+        
+        # Schema Validation (NEW)
+        if 'schema_validation' in self.scan_results:
+            schema = self.scan_results['schema_validation']
+            valid_count = schema.get('valid_schemas', 0)
+            total_count = schema.get('total_schemas', 0)
+            if total_count > 0:
+                color = Fore.GREEN if valid_count == total_count else Fore.YELLOW
+                print(f"{Fore.WHITE}Schema.org Validation: {color}{valid_count}/{total_count} valid{Style.RESET_ALL}")
         
         print(f"\n{Fore.CYAN}Check the full report for detailed analysis and recommendations.{Style.RESET_ALL}\n")
     

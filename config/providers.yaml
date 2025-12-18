@@ -1,0 +1,37 @@
+# Provider Configuration
+# All providers are optional - the tool works fully offline without any API keys
+
+global:
+  timeout: 30
+  max_retries: 3
+  enable_optional_providers: false
+
+providers:
+  # Google PageSpeed Insights API
+  pagespeed:
+    enabled: false
+    api_key: ""
+    timeout: 60
+    # strategy: mobile | desktop
+    strategy: mobile
+  
+  # Playwright for JavaScript rendering
+  playwright:
+    enabled: false
+    render_js: false
+    timeout: 30
+    # device emulation
+    device: desktop
+  
+  # SERP API for search rankings (future)
+  serp:
+    enabled: false
+    api_key: ""
+    country: us
+    device: desktop
+  
+  # Backlink provider (future)
+  backlinks:
+    enabled: false
+    api_key: ""
+    quota: 100
